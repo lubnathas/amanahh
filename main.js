@@ -245,9 +245,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (isMobileDevice) {
             // Unrestricted playback for mobile devices
-            heroVideo.play().catch(e => console.log("Mobile autoplay prevented:", e));
+            // Rely on native HTML5 autoplay first.
             mainContainer.style.scrollSnapType = 'y mandatory';
             if (scrollIndicator) scrollIndicator.classList.add('hidden');
+
+            // Fallback: If native autoplay was blocked (e.g., low power mode),
+            // play the video on the first user interaction.
+            const playOnTouch = () => {
+                if (heroVideo && heroVideo.paused) {
+                    heroVideo.play().catch(e => console.log("Mobile tap-to-play prevented:", e));
+                }
+                document.removeEventListener('touchstart', playOnTouch);
+                document.removeEventListener('click', playOnTouch);
+            };
+
+            document.addEventListener('touchstart', playOnTouch, { passive: true });
+            document.addEventListener('click', playOnTouch);
         } else {
             // Prevent scroll snapping until video finishes once
             mainContainer.style.scrollSnapType = 'none';

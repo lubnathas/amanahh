@@ -765,6 +765,9 @@ nav {
 
 .scroll-indicator.hidden {
     opacity: 0;
+    visibility: hidden;
+    animation: none;
+    display: none;
 }
 
 @keyframes indicatorPulse {
