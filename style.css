@@ -730,6 +730,19 @@ nav {
     .map-container {
         height: 400px;
     }
+
+    .card-stack-container {
+        height: 450px;
+        max-width: 90vw;
+    }
+
+    .card-hidden {
+        transform: translateY(-40px) scale(0.85) translateZ(-100px);
+    }
+    
+    .card-swiping {
+        transform: translateX(-100%) scale(1.05) rotate(-5deg) translateZ(50px);
+    }
 }
 
 /* Scroll Indicator */

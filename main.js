@@ -239,62 +239,73 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     if (heroVideo) {
-        // Prevent scroll snapping until video finishes once
-        mainContainer.style.scrollSnapType = 'none';
+        const isMobileDevice = window.matchMedia("(max-width: 768px)").matches || 
+                               ('ontouchstart' in window) || 
+                               (navigator.maxTouchPoints > 0);
 
-        mainContainer.addEventListener('wheel', (e) => {
-            // Check if user is at the very top of the page
-            const isAtTop = mainContainer.scrollTop <= 10;
-            
-            // If at the top and scrolling down
-            if (isHeroLocked && e.deltaY > 0 && isAtTop) {
-                e.preventDefault();
-                playHeroVideoForward();
+        if (isMobileDevice) {
+            // Unrestricted playback for mobile devices
+            heroVideo.play().catch(e => console.log("Mobile autoplay prevented:", e));
+            mainContainer.style.scrollSnapType = 'y mandatory';
+            if (scrollIndicator) scrollIndicator.classList.add('hidden');
+        } else {
+            // Prevent scroll snapping until video finishes once
+            mainContainer.style.scrollSnapType = 'none';
 
-                // Unlock condition
-                if (heroVideo.currentTime > (heroVideo.duration * 0.9)) {
+            mainContainer.addEventListener('wheel', (e) => {
+                // Check if user is at the very top of the page
+                const isAtTop = mainContainer.scrollTop <= 10;
+                
+                // If at the top and scrolling down
+                if (isHeroLocked && e.deltaY > 0 && isAtTop) {
+                    e.preventDefault();
+                    playHeroVideoForward();
+
+                    // Unlock condition
+                    if (heroVideo.currentTime > (heroVideo.duration * 0.9)) {
+                        videoThresholdPassed = true;
+                        isHeroLocked = false;
+                        mainContainer.style.scrollSnapType = 'y mandatory';
+                        document.querySelector('#about').scrollIntoView({ behavior: 'smooth' });
+                    }
+                } 
+                // If at the top (or trying to scroll past top) and scrolling UP
+                else if (isAtTop && e.deltaY < 0) {
+                    // Re-lock the hero section so they can scrub backward
+                    isHeroLocked = true;
+                    videoThresholdPassed = false;
+                    mainContainer.style.scrollSnapType = 'none'; // Disable snapping so they don't jump down
+                    
+                    if (heroVideo.currentTime > 0) {
+                        e.preventDefault(); // Stop normal scrolling
+                        playHeroVideoReverse();
+                    }
+                }
+            }, { passive: false });
+
+            // Backup for touch/drag scrolling
+            mainContainer.addEventListener('scroll', () => {
+                if (isHeroLocked) {
+                    if (mainContainer.scrollTop > 10) {
+                        playHeroVideoForward();
+                        
+                        // If they managed to scroll past the lock (e.g. mobile drag), snap them back if video not done
+                        if (!videoThresholdPassed && heroVideo.currentTime < heroVideo.duration * 0.9) {
+                            mainContainer.scrollTop = 0;
+                        }
+                    }
+                }
+            });
+
+            // Event for video reaching end organically (fallback)
+            heroVideo.addEventListener('timeupdate', () => {
+                if (isHeroLocked && heroVideo.currentTime > (heroVideo.duration * 0.95)) {
                     videoThresholdPassed = true;
                     isHeroLocked = false;
                     mainContainer.style.scrollSnapType = 'y mandatory';
-                    document.querySelector('#about').scrollIntoView({ behavior: 'smooth' });
                 }
-            } 
-            // If at the top (or trying to scroll past top) and scrolling UP
-            else if (isAtTop && e.deltaY < 0) {
-                // Re-lock the hero section so they can scrub backward
-                isHeroLocked = true;
-                videoThresholdPassed = false;
-                mainContainer.style.scrollSnapType = 'none'; // Disable snapping so they don't jump down
-                
-                if (heroVideo.currentTime > 0) {
-                    e.preventDefault(); // Stop normal scrolling
-                    playHeroVideoReverse();
-                }
-            }
-        }, { passive: false });
-
-        // Backup for touch/drag scrolling
-        mainContainer.addEventListener('scroll', () => {
-            if (isHeroLocked) {
-                if (mainContainer.scrollTop > 10) {
-                    playHeroVideoForward();
-                    
-                    // If they managed to scroll past the lock (e.g. mobile drag), snap them back if video not done
-                    if (!videoThresholdPassed && heroVideo.currentTime < heroVideo.duration * 0.9) {
-                        mainContainer.scrollTop = 0;
-                    }
-                }
-            }
-        });
-
-        // Event for video reaching end organically (fallback)
-        heroVideo.addEventListener('timeupdate', () => {
-            if (isHeroLocked && heroVideo.currentTime > (heroVideo.duration * 0.95)) {
-                videoThresholdPassed = true;
-                isHeroLocked = false;
-                mainContainer.style.scrollSnapType = 'y mandatory';
-            }
-        });
+            });
+        }
     }
 
 });
