@@ -601,7 +601,8 @@ nav {
 
 /* Trigger autoscroll when hovered or expanded */
 .stack-card.card-front:hover p,
-.stack-card.expanded p {
+.stack-card.expanded p,
+#services:hover .stack-card.card-front p {
     animation-play-state: running;
 }
 
