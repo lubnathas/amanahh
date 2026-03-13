@@ -422,6 +422,45 @@ nav {
     line-height: 1.5;
 }
 
+.stats-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 3rem;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 2rem;
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(0, 71, 171, 0.1);
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    display: inline-block;
+}
+
+.stat-plus {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    vertical-align: top;
+    margin-left: 2px;
+}
+
+.stat-item p {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 0.5rem;
+}
+
 .about-image-container {
     height: 100%;
     position: relative;
