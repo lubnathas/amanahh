@@ -321,36 +321,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Stats Counter Animation
-    const stats = document.querySelectorAll('.stat-number');
-    const statsSection = document.querySelector('.stats-container');
-    
-    if (stats.length > 0 && statsSection) {
-        let observerStarted = false;
-        
-        const countUp = (element) => {
-            const target = +element.getAttribute('data-target');
-            const count = +element.innerText;
-            const speed = 2000 / target; // Fixed duration of 2 seconds
-            
-            if (count < target) {
-                element.innerText = count + 1;
-                setTimeout(() => countUp(element), speed);
-            } else {
-                element.innerText = target;
-            }
-        };
-
-        const statsObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !observerStarted) {
-                    stats.forEach(stat => countUp(stat));
-                    observerStarted = true;
-                }
-            });
-        }, { threshold: 0.5 });
-
-        statsObserver.observe(statsSection);
-    }
-
 });
