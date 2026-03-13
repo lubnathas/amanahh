@@ -24,6 +24,31 @@ body {
     overflow-x: hidden;
 }
 
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-white);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #003380;
+}
+
+@keyframes autoScrollVertical {
+    0% { transform: translateY(0); }
+    5% { transform: translateY(0); }
+    95% { transform: translateY(calc(-100% + 150px)); }
+    100% { transform: translateY(calc(-100% + 150px)); }
+}
+
 /* Scroll Snapping Container */
 .main-container {
     height: 100vh;
@@ -51,14 +76,12 @@ nav {
     top: 0;
     width: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 1rem 4rem;
     z-index: 2000;
-    background: #ffffff;
+    background: #ffffff; /* Solid white background blends with logo */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    gap: 0.5rem;
 }
 
 .logo {
@@ -69,7 +92,7 @@ nav {
 }
 
 .logo-img {
-    height: 85px !important;
+    height: 50px !important;
     width: auto !important;
     display: block !important;
     animation: logoDrop 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
@@ -297,7 +320,24 @@ nav {
     gap: 0.5rem;
     position: relative;
     overflow: hidden;
+    height: 180px;
     animation: floating 4s ease-in-out infinite;
+}
+
+.about-item .scroll-wrapper {
+    height: 100%;
+    overflow: hidden;
+}
+
+.about-item p {
+    font-size: 0.85rem;
+    color: #555;
+    line-height: 1.5;
+    animation: autoScrollVertical 10s linear infinite;
+}
+
+.about-item:hover p {
+    animation-play-state: paused;
 }
 
 .about-item:nth-child(even) {
@@ -332,11 +372,7 @@ nav {
     letter-spacing: -0.5px;
 }
 
-.about-item p {
-    font-size: 0.85rem;
-    color: #555;
-    line-height: 1.5;
-}
+
 
 .mission-vision-boxes {
     display: grid;
@@ -357,7 +393,24 @@ nav {
     gap: 0.5rem;
     position: relative;
     overflow: hidden;
+    height: 180px;
     animation: floating 4s ease-in-out infinite;
+}
+
+.mv-box .scroll-wrapper {
+    height: 100%;
+    overflow: hidden;
+}
+
+.mv-box p {
+    font-size: 0.85rem;
+    color: #555;
+    line-height: 1.5;
+    animation: autoScrollVertical 10s linear infinite;
+}
+
+.mv-box:hover p {
+    animation-play-state: paused;
 }
 
 .mv-box:nth-child(2) {
@@ -528,6 +581,13 @@ nav {
     transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
     display: flex;
     flex-direction: column;
+    padding-right: 5px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.card-details .scroll-wrapper {
+    max-height: 150px;
+    overflow: hidden;
 }
 
 .card-details p {
@@ -535,6 +595,14 @@ nav {
     color: #666;
     line-height: 1.5;
     margin-bottom: 1rem;
+    animation: autoScrollVertical 8s linear infinite;
+    animation-play-state: paused; /* Pause by default */
+}
+
+/* Trigger autoscroll when hovered or expanded */
+.stack-card.card-front:hover p,
+.stack-card.expanded p {
+    animation-play-state: running;
 }
 
 .close-details-btn {
@@ -568,7 +636,7 @@ nav {
     }
 
     .stack-card.card-front:hover .card-details {
-        max-height: 200px;
+        max-height: 400px;
         opacity: 1;
         margin-top: 10px;
     }
@@ -595,7 +663,7 @@ nav {
 }
 
 .stack-card.expanded .card-details {
-    max-height: 200px;
+    max-height: 400px;
     opacity: 1;
     margin-top: 10px;
 }
@@ -954,16 +1022,11 @@ footer {
 
 @media (max-width: 768px) {
     nav {
-        flex-direction: row;
-        justify-content: center;
-        position: relative;
         padding: 1rem 1.5rem;
     }
 
     .mobile-menu-toggle {
         display: block;
-        position: absolute;
-        right: 1.5rem;
     }
 
     .nav-links {
