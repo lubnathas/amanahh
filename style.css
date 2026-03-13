@@ -51,12 +51,14 @@ nav {
     top: 0;
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    padding: 1rem 4rem;
+    padding: 1rem 2rem;
     z-index: 2000;
-    background: #ffffff; /* Solid white background blends with logo */
+    background: #ffffff;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    gap: 0.5rem;
 }
 
 .logo {
@@ -67,7 +69,7 @@ nav {
 }
 
 .logo-img {
-    height: 50px !important;
+    height: 85px !important;
     width: auto !important;
     display: block !important;
     animation: logoDrop 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
@@ -181,28 +183,6 @@ nav {
     position: relative;
     z-index: 3;
     color: white; /* Ensure text is white */
-}
-
-.hero-logo-container {
-    margin-bottom: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.hero-center-logo {
-    height: 120px;
-    width: auto;
-    border-radius: 20px;
-    padding: 15px;
-    background: white;
-    box-shadow: 0 0 25px rgba(255, 255, 255, 0.6), 0 10px 30px rgba(0, 0, 0, 0.2);
-    animation: floating 4s ease-in-out infinite;
-    transition: transform 0.3s ease;
-}
-
-.hero-center-logo:hover {
-    transform: scale(1.1);
 }
 
 .hero-content h1 {
@@ -789,11 +769,6 @@ nav {
         font-size: 2.5rem;
     }
 
-    .hero-center-logo {
-        height: 90px;
-        padding: 10px;
-    }
-
     .about-image-container,
     .map-container {
         height: 400px;
@@ -979,11 +954,16 @@ footer {
 
 @media (max-width: 768px) {
     nav {
+        flex-direction: row;
+        justify-content: center;
+        position: relative;
         padding: 1rem 1.5rem;
     }
 
     .mobile-menu-toggle {
         display: block;
+        position: absolute;
+        right: 1.5rem;
     }
 
     .nav-links {
