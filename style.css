@@ -246,20 +246,21 @@ nav {
 
 /* About Slide */
 #about {
-    background: linear-gradient(135deg, #00A3FF 0%, #0047AB 100%);
+    background-color: var(--bg-white);
     display: grid;
     grid-template-columns: 1fr 1.2fr;
     gap: 4rem;
     align-items: center;
     position: relative;
+    padding: 8rem 4rem;
 }
 
 #about .section-title {
-    color: white;
+    color: var(--text-color);
 }
 
 #about .section-subtitle {
-    color: rgba(255, 255, 255, 0.8);
+    color: #555;
 }
 
 #about::after {
@@ -458,16 +459,16 @@ nav {
 
 /* Services Slide */
 #services {
-    background: linear-gradient(135deg, #00A3FF 0%, #0047AB 100%);
-    padding-top: 6rem;
+    background-color: var(--bg-light);
+    padding: 8rem 4rem;
 }
 
 #services .section-title {
-    color: white;
+    color: var(--text-color);
 }
 
 #services .section-subtitle {
-    color: rgba(255, 255, 255, 0.8);
+    color: #555;
 }
 
 .card-stack-container {
