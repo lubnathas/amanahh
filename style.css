@@ -180,7 +180,7 @@ nav {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(0, 163, 255, 0.45) 0%, rgba(26, 43, 69, 0.75) 100%); /* Vibrant 'Fantastic' Blue Gradient Overlay */
+    background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.65)); /* Neutral dark overlay - colors moved to content sections */
     z-index: 2;
 }
 
@@ -246,15 +246,20 @@ nav {
 
 /* About Slide */
 #about {
-    background-color: var(--bg-white);
+    background: linear-gradient(135deg, #00A3FF 0%, #0047AB 100%);
     display: grid;
     grid-template-columns: 1fr 1.2fr;
     gap: 4rem;
     align-items: center;
     position: relative;
-    background-image: 
-        radial-gradient(circle at 20% 20%, rgba(26, 54, 93, 0.02) 0%, transparent 40%),
-        radial-gradient(circle at 80% 80%, rgba(26, 54, 93, 0.02) 0%, transparent 40%);
+}
+
+#about .section-title {
+    color: white;
+}
+
+#about .section-subtitle {
+    color: rgba(255, 255, 255, 0.8);
 }
 
 #about::after {
@@ -453,8 +458,16 @@ nav {
 
 /* Services Slide */
 #services {
-    background-color: var(--bg-light);
+    background: linear-gradient(135deg, #00A3FF 0%, #0047AB 100%);
     padding-top: 6rem;
+}
+
+#services .section-title {
+    color: white;
+}
+
+#services .section-subtitle {
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .card-stack-container {
