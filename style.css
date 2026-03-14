@@ -24,31 +24,6 @@ body {
     overflow-x: hidden;
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--bg-white);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--primary-color);
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #003380;
-}
-
-@keyframes autoScrollVertical {
-    0% { transform: translateY(0); }
-    5% { transform: translateY(0); }
-    95% { transform: translateY(calc(-100% + 150px)); }
-    100% { transform: translateY(calc(-100% + 150px)); }
-}
-
 /* Scroll Snapping Container */
 .main-container {
     height: 100vh;
@@ -320,29 +295,9 @@ nav {
     gap: 0.5rem;
     position: relative;
     overflow: hidden;
-    height: 180px;
-    animation: floating 4s ease-in-out infinite;
 }
 
-.about-item .scroll-wrapper {
-    height: 100%;
-    overflow: hidden;
-}
 
-.about-item p {
-    font-size: 0.85rem;
-    color: #555;
-    line-height: 1.5;
-    animation: autoScrollVertical 10s linear infinite;
-}
-
-.about-item:hover p {
-    animation-play-state: paused;
-}
-
-.about-item:nth-child(even) {
-    animation-delay: 2s;
-}
 
 .about-item::before {
     content: '';
@@ -372,7 +327,11 @@ nav {
     letter-spacing: -0.5px;
 }
 
-
+.about-item p {
+    font-size: 0.85rem;
+    color: #555;
+    line-height: 1.5;
+}
 
 .mission-vision-boxes {
     display: grid;
@@ -393,34 +352,11 @@ nav {
     gap: 0.5rem;
     position: relative;
     overflow: hidden;
-    height: 180px;
-    animation: floating 4s ease-in-out infinite;
 }
 
-.mv-box .scroll-wrapper {
-    height: 100%;
-    overflow: hidden;
-}
 
-.mv-box p {
-    font-size: 0.85rem;
-    color: #555;
-    line-height: 1.5;
-    animation: autoScrollVertical 10s linear infinite;
-}
 
-.mv-box:hover p {
-    animation-play-state: paused;
-}
 
-.mv-box:nth-child(2) {
-    animation-delay: 2s;
-}
-
-@keyframes floating {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
 
 .mv-box::before {
     content: '';
@@ -581,13 +517,6 @@ nav {
     transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
     display: flex;
     flex-direction: column;
-    padding-right: 5px;
-    -webkit-overflow-scrolling: touch;
-}
-
-.card-details .scroll-wrapper {
-    max-height: 150px;
-    overflow: hidden;
 }
 
 .card-details p {
@@ -595,15 +524,6 @@ nav {
     color: #666;
     line-height: 1.5;
     margin-bottom: 1rem;
-    animation: autoScrollVertical 8s linear infinite;
-    animation-play-state: paused; /* Pause by default */
-}
-
-/* Trigger autoscroll when hovered or expanded */
-.stack-card.card-front:hover p,
-.stack-card.expanded p,
-#services:hover .stack-card.card-front p {
-    animation-play-state: running;
 }
 
 .close-details-btn {
@@ -637,7 +557,7 @@ nav {
     }
 
     .stack-card.card-front:hover .card-details {
-        max-height: 400px;
+        max-height: 200px;
         opacity: 1;
         margin-top: 10px;
     }
@@ -664,7 +584,7 @@ nav {
 }
 
 .stack-card.expanded .card-details {
-    max-height: 400px;
+    max-height: 200px;
     opacity: 1;
     margin-top: 10px;
 }
