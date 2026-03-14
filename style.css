@@ -180,7 +180,7 @@ nav {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(rgba(26, 43, 69, 0.4), rgba(26, 43, 69, 0.6)); /* Dark navy-blue overlay */
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)); /* Neutral dark overlay */
     z-index: 2;
 }
 
