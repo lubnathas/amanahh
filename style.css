@@ -6,11 +6,11 @@
 }
 
 :root {
-    --primary-color: #0047AB; /* Cobalt Blue */
-    --secondary-color: #F5F5DC; /* Beige */
-    --text-color: #333;
-    --bg-white: #F5F5DC; /* Beige */
-    --bg-light: #E8E8D0; /* Slightly darker beige for contrast */
+    --primary-color: #00A3FF; /* Vibrant Light Blue */
+    --secondary-color: #E0F2FF; /* Soft Sky Blue */
+    --text-color: #1A2B45; /* Deep Navy Shell */
+    --bg-white: #FFFFFF; /* Pure White */
+    --bg-light: #F8FBFF; /* Lightest Airy Blue */
     --transition-speed: 0.4s;
 }
 
@@ -180,7 +180,7 @@ nav {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)); /* Darker overlay for white text */
+    background: linear-gradient(rgba(26, 43, 69, 0.4), rgba(26, 43, 69, 0.6)); /* Dark navy-blue overlay */
     z-index: 2;
 }
 
@@ -229,7 +229,7 @@ nav {
 
 .btn-primary:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(26, 54, 93, 0.3);
+    box-shadow: 0 10px 20px rgba(0, 163, 255, 0.3);
 }
 
 .btn-outline {
@@ -330,7 +330,7 @@ nav {
 
 .about-item:hover {
     transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(26, 54, 93, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 163, 255, 0.15);
 }
 
 .about-item:hover::before {
@@ -399,7 +399,7 @@ nav {
 .mv-icon {
     width: 45px;
     height: 45px;
-    background: rgba(26, 54, 93, 0.05);
+    background: rgba(0, 163, 255, 0.1);
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -548,7 +548,7 @@ nav {
     font-weight: 700;
     cursor: pointer;
     transition: all 0.3s;
-    box-shadow: 0 4px 15px rgba(26, 54, 93, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 163, 255, 0.25);
 }
 
 .learn-more-btn:hover {
@@ -570,13 +570,13 @@ nav {
     font-weight: 800;
     color: var(--primary-color);
     margin-bottom: 1.5rem;
-    border-bottom: 2px solid rgba(26, 54, 93, 0.1);
+    border-bottom: 2px solid rgba(0, 163, 255, 0.1);
     padding-bottom: 0.5rem;
 }
 
 .card-back p {
     font-size: 1.1rem;
-    color: #444;
+    color: #4A5568;
     line-height: 1.6;
     margin-bottom: 2rem;
 }
