@@ -859,10 +859,10 @@ nav {
 
 /* Footer & Developer Link */
 footer {
-    background-color: #1A2B45; /* Deep Professional Navy inspired by mockup */
+    background-color: #F0F7FF; /* Alice Blue matching the theme */
     padding: 6rem 4rem 2rem;
-    border-top: none;
-    color: white;
+    border-top: 1px solid rgba(0, 163, 255, 0.1);
+    color: var(--text-color);
 }
 
 .footer-container {
@@ -883,12 +883,12 @@ footer {
 .footer-about {
     font-size: 0.95rem;
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.7);
+    color: #666;
     max-width: 400px;
 }
 
 .footer-col h3 {
-    color: white;
+    color: var(--text-color);
     font-size: 1.2rem;
     margin-bottom: 1.5rem;
     position: relative;
@@ -911,13 +911,13 @@ footer {
 
 .footer-col ul li {
     margin-bottom: 0.8rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: #666;
     font-size: 0.95rem;
 }
 
 .footer-col ul li a {
     text-decoration: none;
-    color: rgba(255, 255, 255, 0.7);
+    color: #666;
     transition: color 0.3s;
 }
 
@@ -932,12 +932,12 @@ footer {
     max-width: 1200px;
     margin: 0 auto;
     padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .footer-bottom p {
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: #777;
 }
 
 .developer-section {
