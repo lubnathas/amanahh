@@ -247,20 +247,23 @@ nav {
 
 /* About Slide */
 #about {
-    background: linear-gradient(135deg, #00A3FF 0%, #0047AB 100%);
+    background-color: var(--bg-white);
     display: grid;
     grid-template-columns: 1fr 1.2fr;
     gap: 4rem;
     align-items: center;
     position: relative;
+    background-image: 
+        radial-gradient(circle at 20% 20%, rgba(26, 54, 93, 0.02) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(26, 54, 93, 0.02) 0%, transparent 40%);
 }
 
 #about .section-title {
-    color: white;
+    color: var(--text-color);
 }
 
 #about .section-subtitle {
-    color: rgba(255, 255, 255, 0.8);
+    color: #666;
 }
 
 #about::after {
@@ -459,16 +462,16 @@ nav {
 
 /* Services Slide */
 #services {
-    background: linear-gradient(135deg, #00A3FF 0%, #0047AB 100%);
+    background-color: var(--bg-light);
     padding-top: 6rem;
 }
 
 #services .section-title {
-    color: white;
+    color: var(--text-color);
 }
 
 #services .section-subtitle {
-    color: rgba(255, 255, 255, 0.8);
+    color: #666;
 }
 
 .card-stack-container {
