@@ -194,7 +194,7 @@ nav {
     font-size: 4rem;
     font-weight: 800;
     margin-bottom: 1.5rem;
-    color: #00A3FF; /* Logo Blue */
+    color: white;
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* Ensure readability */
     line-height: 1.1;
 }
