@@ -295,6 +295,16 @@ nav {
     gap: 0.5rem;
     position: relative;
     overflow: hidden;
+    animation: floating 4s ease-in-out infinite;
+}
+
+.about-item:nth-child(even) {
+    animation-delay: 2s;
+}
+
+@keyframes floating {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }
 
 
