@@ -524,13 +524,35 @@ nav {
 
 .stack-card .card-front img {
     width: 100%;
-    height: 75%;
+    height: 65%;
     object-fit: cover;
 }
 
+.learn-more-btn {
+    display: block;
+    width: fit-content;
+    margin: 1rem auto;
+    padding: 0.8rem 2rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(26, 54, 93, 0.2);
+}
+
+.learn-more-btn:hover {
+    background: var(--text-color);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
 .stack-card .card-front h3 {
-    padding: 1.5rem 2rem;
-    font-size: 1.5rem;
+    padding: 0.5rem 2rem 0;
+    font-size: 1.4rem;
     font-weight: 800;
     color: var(--text-color);
     text-align: center;
