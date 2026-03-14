@@ -110,36 +110,32 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Click/Touch Expansion Logic
+        // Card Flip Logic
         stackCards.forEach(card => {
             card.addEventListener('click', (e) => {
-                // If the card clicked is the front card
+                // If the card clicked is the front card (or within its stack position)
                 if (card.classList.contains('card-front')) {
-                    // If it's already expanded, shrink it and resume
-                    if (card.classList.contains('expanded')) {
-                        card.classList.remove('expanded');
+                    // Toggle flip
+                    if (card.classList.contains('flipped')) {
+                        card.classList.remove('flipped');
                         isStackPaused = false;
                         startStackLoop();
-                    } 
-                    // Otherwise expand it and pause
-                    else {
+                    } else {
                         stopStackLoop();
                         isStackPaused = true;
                         
-                        // Close any other expanded cards just in case
-                        document.querySelectorAll('.expanded').forEach(c => c.classList.remove('expanded'));
-                        
-                        card.classList.add('expanded');
+                        // Flip this card
+                        card.classList.add('flipped');
                     }
                 }
             });
 
-            // Close button click specifically
+            // Close button specifically
             const closeBtn = card.querySelector('.close-details-btn');
             if (closeBtn) {
                 closeBtn.addEventListener('click', (e) => {
-                    e.stopPropagation(); // Stop the card click from firing
-                    card.classList.remove('expanded');
+                    e.stopPropagation();
+                    card.classList.remove('flipped');
                     isStackPaused = false;
                     startStackLoop();
                 });
