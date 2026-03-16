@@ -832,11 +832,31 @@ nav {
     transition: all 0.3s ease;
 }
 
-.detail-item:hover .contact-icon {
+.contact-icon-link {
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.contact-icon-link:hover .contact-icon {
     background: var(--primary-color);
     color: white;
-    transform: translateY(-3px);
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 163, 255, 0.3);
 }
+
+.contact-text-link {
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.contact-text-link:hover {
+    color: var(--primary-color);
+    transform: translateX(5px);
+}
+
+/* Handled by .contact-icon-link hover or consolidated detail-item hover if needed */
 
 .contact-icon svg {
     width: 22px;
