@@ -28,19 +28,18 @@ body {
 .main-container {
     height: 100vh;
     overflow-y: scroll;
-    scroll-snap-type: y mandatory;
+    /* scroll-snap-type managed by JS to allow unlock */
     scroll-behavior: smooth;
 }
 
 section {
-    height: 100vh;
+    min-height: 100vh;
     width: 100vw;
-    scroll-snap-align: start;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 2rem;
+    padding: 6rem 2rem; /* Increased padding for breathing room between continuous sections */
     position: relative;
     overflow: hidden;
 }
@@ -156,7 +155,9 @@ nav {
 
 /* Home Slide */
 #home {
-    background: transparent; /* Remove static background */
+    height: 100vh;
+    scroll-snap-align: start;
+    background: transparent;
     text-align: center;
     position: relative;
     overflow: hidden;

@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (heroVideo.currentTime > (heroVideo.duration * 0.9)) {
                         videoThresholdPassed = true;
                         isHeroLocked = false;
-                        mainContainer.style.scrollSnapType = 'y mandatory';
+                        // mainContainer.style.scrollSnapType = 'y mandatory'; // Removed to allow natural scrolling
                         document.querySelector('#about').scrollIntoView({ behavior: 'smooth' });
                     }
                 } 
