@@ -101,43 +101,60 @@ document.addEventListener('DOMContentLoaded', () => {
         // Start continuous loop
         startStackLoop();
         
-        // Pause on desktop hover (optional, improves readability on mouse hover)
+        // Pause on desktop hover
         const container = document.querySelector('.card-stack-container');
         if (container) {
             container.addEventListener('mouseenter', stopStackLoop);
             container.addEventListener('mouseleave', () => {
-                if (!isStackPaused) startStackLoop(); // Only restart if not locked open
+                if (!isStackPaused) startStackLoop();
             });
+        }
+
+        // Create and append overlay if it doesn't exist
+        let overlay = document.querySelector('.card-overlay');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.className = 'card-overlay';
+            document.body.appendChild(overlay);
         }
 
         // Card Flip Logic
         stackCards.forEach(card => {
-            card.addEventListener('click', (e) => {
-                // If the card clicked is the front card (or within its stack position)
+            const toggleFlip = (forceClose = false) => {
+                const isFlippingOpen = !card.classList.contains('flipped') && !forceClose;
+                
+                if (isFlippingOpen) {
+                    stopStackLoop();
+                    isStackPaused = true;
+                    card.classList.add('flipped');
+                    overlay.classList.add('active');
+                    document.body.classList.add('no-scroll');
+                } else {
+                    card.classList.remove('flipped');
+                    overlay.classList.remove('active');
+                    document.body.classList.remove('no-scroll');
+                    isStackPaused = false;
+                    setTimeout(startStackLoop, 300);
+                }
+            };
+
+            card.addEventListener('click', () => {
                 if (card.classList.contains('card-front')) {
-                    // Toggle flip
-                    if (card.classList.contains('flipped')) {
-                        card.classList.remove('flipped');
-                        isStackPaused = false;
-                        startStackLoop();
-                    } else {
-                        stopStackLoop();
-                        isStackPaused = true;
-                        
-                        // Flip this card
-                        card.classList.add('flipped');
-                    }
+                    toggleFlip();
                 }
             });
 
-            // Close button specifically
+            overlay.addEventListener('click', () => {
+                if (card.classList.contains('flipped')) {
+                    toggleFlip(true);
+                }
+            });
+
             const closeBtn = card.querySelector('.close-details-btn');
             if (closeBtn) {
                 closeBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    card.classList.remove('flipped');
-                    isStackPaused = false;
-                    startStackLoop();
+                    toggleFlip(true);
                 });
             }
         });
@@ -158,28 +175,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Scroll Snapping Active Link logic (optional enhancement)
+    // Scroll Snapping Active Link logic
     const sections = document.querySelectorAll('section');
     const navLinks = document.querySelectorAll('.nav-links a');
     const mainContainer = document.querySelector('.main-container');
 
-    mainContainer.addEventListener('scroll', () => {
-        let current = '';
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            if (mainContainer.scrollTop >= (sectionTop - sectionHeight / 3)) {
-                current = section.getAttribute('id');
-            }
-        });
+    if (mainContainer) {
+        mainContainer.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (mainContainer.scrollTop >= (sectionTop - sectionHeight / 3)) {
+                    current = section.getAttribute('id');
+                }
+            });
 
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href').includes(current)) {
-                link.classList.add('active');
-            }
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
         });
-    });
+    }
     
     // Scroll-triggered Video Playback & Transition Sync
     const heroVideo = document.querySelector('.hero-video');
@@ -191,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const playHeroVideoForward = () => {
         if (reverseInterval) {
-            clearInterval(reverseInterval); // Stop reverse if playing
+            clearInterval(reverseInterval);
             reverseInterval = null;
         }
         if (heroVideo && heroVideo.paused) {
@@ -200,7 +219,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }).catch(err => console.log("Video play error:", err));
         }
         
-        // Strictly stop when scrolling stops (100ms gap)
         clearTimeout(scrollPauseTimeout);
         scrollPauseTimeout = setTimeout(() => {
             if (heroVideo) heroVideo.pause();
@@ -208,25 +226,22 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const playHeroVideoReverse = () => {
-        if (heroVideo) heroVideo.pause(); // Ensure native playback is stopped
-        
+        if (heroVideo) heroVideo.pause();
         if (scrollIndicator) scrollIndicator.classList.add('hidden');
 
-        // Only start the interval if it's not already running
         if (!reverseInterval) {
             reverseInterval = setInterval(() => {
                 if (heroVideo && heroVideo.currentTime > 0.05) {
-                    heroVideo.currentTime -= 0.05; // Step back by 50ms
+                    heroVideo.currentTime -= 0.05;
                 } else if (heroVideo) {
                     heroVideo.currentTime = 0;
                     clearInterval(reverseInterval);
                     reverseInterval = null;
-                    if (scrollIndicator) scrollIndicator.classList.remove('hidden'); // Show indicator at start
+                    if (scrollIndicator) scrollIndicator.classList.remove('hidden');
                 }
-            }, 30); // Run roughly 33fps
+            }, 30);
         }
 
-        // Stop reverse scrubbing when scrolling stops
         clearTimeout(scrollPauseTimeout);
         scrollPauseTimeout = setTimeout(() => {
             clearInterval(reverseInterval);
@@ -240,12 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                (navigator.maxTouchPoints > 0);
 
         if (isMobileDevice) {
-            // Unrestricted playback for mobile devices
-            // Rely on native HTML5 autoplay first.
             if (scrollIndicator) scrollIndicator.classList.add('hidden');
-
-            // Fallback: If native autoplay was blocked (e.g., low power mode),
-            // play the video on the first user interaction.
             const playOnTouch = () => {
                 if (heroVideo && heroVideo.paused) {
                     heroVideo.play().catch(e => console.log("Mobile tap-to-play prevented:", e));
@@ -253,51 +263,38 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.removeEventListener('touchstart', playOnTouch);
                 document.removeEventListener('click', playOnTouch);
             };
-
             document.addEventListener('touchstart', playOnTouch, { passive: true });
             document.addEventListener('click', playOnTouch);
         } else {
-            // Prevent scroll snapping until video finishes once
-
             window.addEventListener('wheel', (e) => {
-                // Check if user is at the very top of the page
                 const scrollY = window.scrollY;
                 const isAtTop = scrollY <= 10;
                 
-                // If at the top and scrolling down
                 if (isHeroLocked && e.deltaY > 0 && isAtTop) {
                     e.preventDefault();
                     playHeroVideoForward();
 
-                    // Unlock condition
                     if (heroVideo.currentTime > (heroVideo.duration * 0.9)) {
                         videoThresholdPassed = true;
                         isHeroLocked = false;
-                        // Removed to allow natural scrolling
                         document.querySelector('#about').scrollIntoView({ behavior: 'smooth' });
                     }
                 } 
-                // If at the top (or trying to scroll past top) and scrolling UP
                 else if (isAtTop && e.deltaY < 0) {
-                    // Re-lock the hero section so they can scrub backward
                     isHeroLocked = true;
                     videoThresholdPassed = false;
-                    // Disable snapping so they don't jump down
                     
                     if (heroVideo.currentTime > 0) {
-                        e.preventDefault(); // Stop normal scrolling
+                        e.preventDefault();
                         playHeroVideoReverse();
                     }
                 }
             }, { passive: false });
 
-            // Backup for touch/drag scrolling
             window.addEventListener('scroll', () => {
                 if (isHeroLocked) {
                     if (window.scrollY > 10) {
                         playHeroVideoForward();
-                        
-                        // If they managed to scroll past the lock (e.g. mobile drag), snap them back if video not done
                         if (!videoThresholdPassed && heroVideo.currentTime < heroVideo.duration * 0.9) {
                             window.scrollTo(0, 0);
                         }
@@ -305,7 +302,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            // Event for video reaching end organically (fallback)
             heroVideo.addEventListener('timeupdate', () => {
                 if (isHeroLocked && heroVideo.currentTime > (heroVideo.duration * 0.95)) {
                     videoThresholdPassed = true;
