@@ -70,9 +70,10 @@ nav {
     display: block !important;
     animation: logoDrop 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     mix-blend-mode: multiply;
-    filter: brightness(1.05) contrast(1.1); /* Ensure white is pure white for multiply to work perfectly */
+    filter: brightness(1.1) contrast(1.2); /* Strongly push near-white to pure white for perfect blending */
     opacity: 0;
     transition: height 0.3s ease;
+    background-color: transparent !important;
 }
 
 @media (max-width: 768px) {
