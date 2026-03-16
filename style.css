@@ -537,6 +537,28 @@ nav {
     transform: rotateY(180deg);
 }
 
+.stack-card.flipped {
+    position: fixed;
+    top: 50% !important;
+    left: 50% !important;
+    width: 90vw !important;
+    max-width: 800px !important;
+    height: 80vh !important;
+    max-height: 700px !important;
+    transform: translate(-50%, -50%) !important;
+    z-index: 5000 !important;
+    pointer-events: auto !important;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+@media (max-width: 768px) {
+    .stack-card.flipped {
+        width: 95vw !important;
+        height: 85vh !important;
+        max-height: 85vh !important;
+    }
+}
+
 .card-front, .card-back {
     position: absolute;
     width: 100%;
@@ -547,49 +569,32 @@ nav {
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
     background: #F0F7FF;
     overflow: hidden;
-    position: relative;
-}
-
-.description-scroll-container {
-    height: 300px; /* Fixed height for the scrollable area */
-    overflow: hidden;
-    position: relative;
-    mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
-    -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
-    margin-bottom: 3.5rem; /* Space for the close button */
-}
-
-.description-scroll-container p {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    margin: 0;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: var(--text-color);
-}
-
-.stack-card.flipped .description-scroll-container p {
-    animation: autoVerticalScroll 20s linear infinite alternate;
-}
-
-@keyframes autoVerticalScroll {
-    0%, 15% {
-        transform: translateY(0);
-    }
-    85%, 100% {
-        transform: translateY(calc(-100% + 280px)); /* Scrolls based on content height */
-    }
 }
 
 .card-back {
     transform: rotateY(180deg);
     display: flex;
     flex-direction: column;
-    padding: 2.5rem;
+    justify-content: flex-start; /* Start from top for scrolling */
+    padding: 3.5rem 2.5rem;
     background: linear-gradient(135deg, #F0F7FF 0%, #E6F3FF 100%);
-    position: relative;
+    overflow-y: auto; /* Allow scrolling for long text */
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) #f0f0f0;
+}
+
+.card-back::-webkit-scrollbar {
+    width: 6px;
+}
+
+.card-back::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 10px;
+}
+
+.card-back::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 10px;
 }
 
 .card-tag {
