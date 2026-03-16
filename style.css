@@ -41,6 +41,27 @@ section {
     position: relative;
     overflow: hidden;
     min-height: auto; /* Allow natural height */
+    position: relative;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 3.8rem;
+    margin-bottom: 6rem;
+    width: 100%;
+    position: relative;
+    color: var(--text-color);
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 5px;
+    background: var(--primary-color);
 }
 
 /* Navigation */
@@ -337,25 +358,9 @@ nav {
     padding: 0;
 }
 
-#about .section-title {
-    text-align: center;
-    font-size: 3.8rem;
-    margin-bottom: 6rem;
-    width: 100%;
-    position: relative;
-    color: var(--text-color);
-}
+/* Main about section styling */
 
-#about .section-title::after {
-    content: '';
-    position: absolute;
-    bottom: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 5px;
-    background: var(--primary-color);
-}
+/* Accent line already handled globally */
 
 .about-grid {
     display: grid;
@@ -515,12 +520,14 @@ nav {
     padding-top: 6rem;
 }
 
-#services .section-title {
-    color: var(--text-color);
-}
+/* Services section styling */
 
 #services .section-subtitle {
     color: #666;
+    text-align: center;
+    margin-top: -4rem;
+    margin-bottom: 4rem;
+    font-size: 1.1rem;
 }
 
 .card-stack-container {
@@ -770,11 +777,7 @@ nav {
     background: var(--bg-white);
 }
 
-#contact .section-title {
-    margin-bottom: 0;
-    text-align: center;
-    width: 100%;
-}
+/* Contact section styling */
 
 .contact-content-wrapper {
     display: grid;
@@ -885,6 +888,11 @@ nav {
     #home {
         height: 100vh;
         padding: 0;
+    }
+
+    .section-title {
+        font-size: 2.8rem;
+        margin-bottom: 4rem;
     }
 
     .hero-content h1 {
