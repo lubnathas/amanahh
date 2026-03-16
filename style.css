@@ -7,11 +7,11 @@
 
 :root {
     --primary-color: #00A3FF; /* Vibrant Light Blue */
-    --secondary-color: #D1EAFF; /* Premium Sky Blue */
+    --secondary-color: #90CAF9; /* More distinct Sky Blue */
     --text-color: #1A2B45; /* Deep Navy Shell */
-    --bg-white: #EDF7FF; /* Clean Light Blue Tint */
-    --bg-light: #DCEFFF; /* Deeper Sky Blue Contrast */
-    --card-bg: rgba(255, 255, 255, 0.9);
+    --bg-white: #E3F2FD; /* Clearly Light Blue background */
+    --bg-light: #BBDEFB; /* More distinct Light Blue contrast */
+    --card-bg: rgba(255, 255, 255, 0.95);
     --transition-speed: 0.4s;
 }
 
@@ -75,9 +75,9 @@ nav {
     align-items: center;
     padding: 1rem 4rem;
     z-index: 2000;
-    background: #F8FBFF; /* Very soft blue tint */
-    box-shadow: 0 4px 20px rgba(0, 163, 255, 0.08);
-    border-bottom: 1px solid rgba(0, 163, 255, 0.1);
+    background: #E3F2FD; /* Matches the new light blue background */
+    box-shadow: 0 4px 20px rgba(0, 163, 255, 0.12);
+    border-bottom: 1px solid rgba(0, 163, 255, 0.2);
 }
 
 .logo {
@@ -801,10 +801,10 @@ nav {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background: #F5FAFF;
+    background: #E1F5FE; /* Specific light blue for contact section */
     border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 163, 255, 0.05);
-    border: 1px solid rgba(0, 163, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 163, 255, 0.1);
+    border: 1px solid rgba(0, 163, 255, 0.2);
 }
 
 .contact-details {
