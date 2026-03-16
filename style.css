@@ -287,45 +287,12 @@ nav {
 }
 
 #about {
-    padding-top: 5rem;
+    padding-top: 8rem;
     background: #FFFFFF;
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-/* Stats Bar from Reference */
-.about-stats {
-    width: 80%;
-    max-width: 1200px;
-    background: var(--text-color);
-    border-radius: 100px;
-    display: flex;
-    justify-content: space-around;
-    padding: 2rem;
-    position: relative;
-    z-index: 20;
-    margin-top: -8rem; /* Overlap with hero for transition effect */
-    margin-bottom: 5rem;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
-}
-
-.stat-item {
-    text-align: center;
-    color: white;
-}
-
-.stat-num {
-    display: block;
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: var(--primary-color);
-}
-
-.stat-label {
-    font-size: 0.9rem;
-    opacity: 0.8;
 }
 
 .about-container {
