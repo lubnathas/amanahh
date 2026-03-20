@@ -194,36 +194,46 @@ document.addEventListener('DOMContentLoaded', () => {
             clearInterval(reverseInterval); // Stop reverse if playing
             reverseInterval = null;
         }
-        if (heroVideo && heroVideo.paused) {
-            heroVideo.play().then(() => {
-                if (scrollIndicator) scrollIndicator.classList.add('hidden');
-            }).catch(err => console.log("Video play error:", err));
+        if (heroVideo) {
+            heroVideo.playbackRate = 2.5; // Significantly faster forward playback
+            if (heroVideo.paused) {
+                heroVideo.play().then(() => {
+                    if (scrollIndicator) scrollIndicator.classList.add('hidden');
+                }).catch(err => console.log("Video play error:", err));
+            }
         }
         
-        // Strictly stop when scrolling stops (100ms gap)
+        // Strictly stop when scrolling stops (150ms gap for smoother feel)
         clearTimeout(scrollPauseTimeout);
         scrollPauseTimeout = setTimeout(() => {
-            if (heroVideo) heroVideo.pause();
-        }, 100);
+            if (heroVideo) {
+                heroVideo.pause();
+                heroVideo.playbackRate = 1.0; // Reset for any organic playback
+            }
+        }, 150);
     };
 
     const playHeroVideoReverse = () => {
-        if (heroVideo) heroVideo.pause(); // Ensure native playback is stopped
+        if (heroVideo) {
+            heroVideo.pause(); // Ensure native playback is stopped
+            heroVideo.playbackRate = 1.0;
+        }
         
         if (scrollIndicator) scrollIndicator.classList.add('hidden');
 
         // Only start the interval if it's not already running
         if (!reverseInterval) {
             reverseInterval = setInterval(() => {
-                if (heroVideo && heroVideo.currentTime > 0.05) {
-                    heroVideo.currentTime -= 0.05; // Step back by 50ms
+                // quadruple the scrubbing speed for snappy response
+                if (heroVideo && heroVideo.currentTime > 0.2) {
+                    heroVideo.currentTime -= 0.2; 
                 } else if (heroVideo) {
                     heroVideo.currentTime = 0;
                     clearInterval(reverseInterval);
                     reverseInterval = null;
                     if (scrollIndicator) scrollIndicator.classList.remove('hidden'); // Show indicator at start
                 }
-            }, 30); // Run roughly 33fps
+            }, 16); // 60fps for maximum smoothness
         }
 
         // Stop reverse scrubbing when scrolling stops
@@ -231,7 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
         scrollPauseTimeout = setTimeout(() => {
             clearInterval(reverseInterval);
             reverseInterval = null;
-        }, 100);
+        }, 150);
     };
 
     if (heroVideo) {
