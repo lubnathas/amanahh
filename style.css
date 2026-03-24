@@ -275,17 +275,17 @@ nav {
     transform: translateY(-5px);
 }
 
-/* About Slide */
+/* About Slide - Why Choose Us */
 #about {
-    background-color: var(--bg-white);
-    display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 4rem;
-    align-items: center;
+    padding-top: 0; /* Removed top gap */
+    padding-bottom: 4rem;
     position: relative;
-    background-image: 
-        radial-gradient(circle at 20% 20%, rgba(26, 54, 93, 0.02) 0%, transparent 40%),
-        radial-gradient(circle at 80% 80%, rgba(26, 54, 93, 0.02) 0%, transparent 40%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    background: #000; /* Dark base for consistent contrast */
+    min-height: auto;
 }
 
 #about .section-title {
@@ -309,50 +309,31 @@ nav {
     z-index: -1;
 }
 
-#about {
-    padding-top: 8rem;
-    padding-bottom: 8rem;
-    background: #001A33; /* Dark fallback */
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow: hidden;
-    min-height: 100vh;
-}
-
 .about-bg-video {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover; /* Fill section edges, removing black bars */
     z-index: 0;
-    opacity: 0.6;
-}
-
-.about-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, rgba(0, 26, 51, 0.4) 30%, rgba(0, 26, 51, 0.8) 100%);
-    z-index: 1;
+    opacity: 1;
 }
 
 #about .section-title {
     position: relative;
     z-index: 2;
     color: white;
+    margin-top: 4rem; /* Added margin for safe space from navbar */
+    margin-bottom: 4rem;
 }
 
 .about-container {
-    max-width: 1200px;
+    max-width: 100%; /* Changed from 1300px to allow absolute edges */
     width: 100%;
     display: flex;
-    justify-content: flex-end; /* Push content to the right */
+    flex-direction: column; /* Stack scroll track and text block */
+    gap: 4rem;
     align-items: center;
     position: relative;
     z-index: 2;
@@ -360,100 +341,118 @@ nav {
 }
 
 .about-text {
-    flex: 0 1 600px; /* Control text width and alignment */
-    padding: 2rem;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border-radius: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    align-self: center;
+    width: 100%;
+    max-width: 100%; /* Changed from 1400px to full width */
+    padding: 0;
+    background: transparent;
+    backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+    margin: 0;
 }
 
 /* Main about section styling */
 
 /* Accent line already handled globally */
 
-.about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-bottom: 2.5rem;
+.about-scroll-container {
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 3rem;
+    position: relative;
+    padding: 1rem 0;
+}
+
+.about-scroll-track {
+    display: flex;
+    gap: 2rem;
+    width: max-content;
+    animation: scrollCards 30s linear infinite;
+}
+
+/* Pause animation on hover for readability */
+.about-scroll-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes scrollCards {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
 }
 
 .about-item {
+    flex: 0 0 350px; /* Fixed width for consistent scrolling */
     background: rgba(255, 255, 255, 0.95);
-    padding: 1.5rem;
-    border-radius: 15px;
+    padding: 2rem;
+    border-radius: 20px;
     border-left: 5px solid var(--primary-color);
     transition: all 0.3s ease;
-    animation: floatingCards 6s ease-in-out infinite alternate;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-}
-
-.about-item:nth-child(even) {
-    animation-delay: 2s;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .about-item:hover {
-    transform: translateX(10px);
+    transform: translateY(-10px);
     background: white;
-    box-shadow: 0 10px 30px rgba(0, 163, 255, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
 .about-item h3 {
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.about-item p {
+    font-size: 0.95rem;
+    color: #444;
+    line-height: 1.6;
+    margin: 0;
 }
 
 .mission-vision-boxes {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between; /* Far left and far right */
+    align-items: center;
+    gap: 2rem;
+    margin-top: 8rem; /* Perfectly positioned to not cover the background video logo */
+    width: 100%;
+    padding: 0 5vw; /* Absolute edges with slight safety margin */
 }
+
+/* Ensure Mission on left and Vision on right based on user request */
+.mission-vision-boxes .mv-box:nth-child(1) { order: 2; } /* Vision (right) */
+.mission-vision-boxes .mv-box:nth-child(2) { order: 1; } /* Mission (left) */
 
 .mv-box {
-    background: #FFFFFF;
-    padding: 1.5rem;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-    border: 1px solid rgba(0, 163, 255, 0.1);
-    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.98);
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-top: 6px solid var(--primary-color);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     display: flex;
     flex-direction: column;
-    gap: 0.8rem;
-    animation: floatingCards 6s ease-in-out infinite alternate;
-    animation-delay: 1s;
-}
-
-.mv-box:nth-child(even) {
-    animation-delay: 3s;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    gap: 1.5rem;
+    width: 300px; /* Reduced from 350px */
+    height: 300px;
+    aspect-ratio: 1 / 1;
+    animation: floatingCards 5s ease-in-out infinite alternate;
 }
 
 @keyframes floatingCards {
     0% { transform: translateY(0); }
-    100% { transform: translateY(-15px); }
+    100% { transform: translateY(15px); } /* Downward floating */
 }
 
-.mission-vision-boxes {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-top: 2rem;
-}
-
-.mv-box {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 1.5rem;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-left: 5px solid var(--primary-color);
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-}
+/* Synchronized floating without delay */
 
 .mv-icon {
     width: 40px;
@@ -462,14 +461,16 @@ nav {
 }
 
 .mv-box h3 {
-    font-size: 1.1rem;
+    font-size: 1.8rem; /* Big text */
     color: var(--text-color);
+    margin-bottom: 0.5rem;
 }
 
 .mv-box p {
-    font-size: 0.85rem;
-    color: #666;
+    font-size: 1.15rem; /* Big text */
+    color: #444;
     line-height: 1.6;
+    margin: 0;
 }
 
 /* Responsive Redesign */
@@ -496,15 +497,51 @@ nav {
     }
 }
 
-@media (max-width: 600px) {
-    .about-stats {
-        flex-direction: column;
-        align-items: center;
-        padding: 1.5rem;
+@media (max-width: 768px) {
+    #about {
+        padding-top: 6rem; /* Increased safe space to fully clear mobile navbar */
     }
 
-    .about-grid, .mission-vision-boxes {
-        grid-template-columns: 1fr;
+    #about .section-title {
+        order: 1;
+        margin-top: 0;
+        margin-bottom: 2rem;
+    }
+
+    .about-bg-video {
+        position: relative; /* Sit in normal document flow */
+        order: 2;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        margin-bottom: 2rem;
+    }
+
+    .about-container {
+        order: 3;
+    }
+
+    .mission-vision-boxes {
+        flex-direction: column;
+        gap: 2rem;
+        padding: 0 1.5rem;
+        margin-top: 0; /* Stacks naturally below the video now */
+    }
+
+    .mv-box {
+        width: 100%;
+        max-width: 320px;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        padding: 2rem;
+    }
+
+    .mv-box h3 {
+        font-size: 1.5rem;
+    }
+
+    .mv-box p {
+        font-size: 1rem;
     }
 }
 
