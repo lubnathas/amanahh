@@ -277,16 +277,15 @@ nav {
 
 /* About Slide - Why Choose Us */
 #about {
-    padding-top: 0;
-    padding-bottom: 0; /* Removed bottom gap entirely to sit flush with Our Services */
+    padding-top: 0; /* Removed top gap */
+    padding-bottom: 4rem;
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow: hidden;
-    background: #000; /* Dark base fallback */
-    width: 100vw;
-    aspect-ratio: 16 / 9; /* Make the slide EXACTLY the same ratio as the 1080p video */
+    background: #000; /* Dark base for consistent contrast */
+    min-height: auto;
 }
 
 #about .section-title {
@@ -314,39 +313,31 @@ nav {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%; /* Fits the exactly 16:9 container perfectly without scaling */
-    height: 100%; /* Fits the exactly 16:9 container perfectly without scaling */
-    object-fit: cover; /* Enforces 1:1 pixel rendering inside 16:9 container resolving blur! */
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Fill section edges, removing black bars */
     z-index: 0;
     opacity: 1;
-    /* Strict rendering fixes for desktop video clarity */
-    image-rendering: high-quality; /* Forces browser to use highest quality scaler */
-    -webkit-font-smoothing: antialiased; /* Prevents text/logo edge jagging */
-    transform: translateZ(0); /* Forces GPU hardware acceleration for smooth, uncompressed playback */
-    backface-visibility: hidden; /* Eliminates fractional pixel blurring */
-    perspective: 1000px;
 }
 
 #about .section-title {
     position: relative;
     z-index: 2;
     color: white;
-    margin-top: 4vw; /* Scalable margin */
-    margin-bottom: 0; /* Let flex handle space */
+    margin-top: 4rem; /* Added margin for safe space from navbar */
+    margin-bottom: 4rem;
 }
 
 .about-container {
-    max-width: 100%;
+    max-width: 100%; /* Changed from 1300px to allow absolute edges */
     width: 100%;
-    height: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: space-around; /* Naturally distribute scrolling track and boxes */
+    flex-direction: column; /* Stack scroll track and text block */
+    gap: 4rem;
     align-items: center;
     position: relative;
     z-index: 2;
     padding: 0 2rem;
-    padding-bottom: 2vw; /* Slight lift from bottom slider section */
 }
 
 .about-text {
@@ -368,8 +359,9 @@ nav {
 .about-scroll-container {
     width: 100%;
     overflow: hidden;
+    margin-bottom: 3rem;
     position: relative;
-    margin: 0;
+    padding: 1rem 0;
 }
 
 .about-scroll-track {
@@ -426,7 +418,7 @@ nav {
     justify-content: space-between; /* Far left and far right */
     align-items: center;
     gap: 2rem;
-    margin-top: 8vw; /* Pushed further down to entirely clear the massive shield logo */
+    margin-top: 8rem; /* Perfectly positioned to not cover the background video logo */
     width: 100%;
     padding: 0 5vw; /* Absolute edges with slight safety margin */
 }
@@ -506,22 +498,19 @@ nav {
 }
 
 @media (max-width: 768px) {
-    #about {
-        padding-top: 6rem; /* Increased safe space to fully clear mobile navbar */
-    }
-
     #about .section-title {
         order: 1;
-        margin-top: 0;
         margin-bottom: 2rem;
     }
 
     .about-bg-video {
-        position: relative; /* Sit in normal document flow */
+        position: relative;
         order: 2;
         width: 100%;
         height: auto;
+        aspect-ratio: 16 / 9;
         object-fit: cover;
+        border-radius: 15px; /* Add a subtle rounding for a premium card-style look */
         margin-bottom: 2rem;
     }
 
@@ -533,7 +522,7 @@ nav {
         flex-direction: column;
         gap: 2rem;
         padding: 0 1.5rem;
-        margin-top: 0; /* Stacks naturally below the video now */
+        margin-top: 2rem; /* Boxes naturally sit clean below the contained top-video */
     }
 
     .mv-box {
