@@ -313,11 +313,17 @@ nav {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Fill section edges, removing black bars */
+    width: 100vw; /* Exact screen width */
+    height: 56.25vw; /* Math-perfect 16:9 aspect ratio (9 / 16 * 100) */
+    object-fit: contain; /* Prevents any forced stretching/cropping */
     z-index: 0;
     opacity: 1;
+    /* Strict rendering fixes for desktop video clarity */
+    image-rendering: high-quality; /* Forces browser to use highest quality scaler */
+    -webkit-font-smoothing: antialiased; /* Prevents text/logo edge jagging */
+    transform: translateZ(0); /* Forces GPU hardware acceleration for smooth, uncompressed playback */
+    backface-visibility: hidden; /* Eliminates fractional pixel blurring */
+    perspective: 1000px;
 }
 
 #about .section-title {
