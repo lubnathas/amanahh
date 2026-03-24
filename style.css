@@ -277,15 +277,16 @@ nav {
 
 /* About Slide - Why Choose Us */
 #about {
-    padding-top: 0; /* Removed top gap */
-    padding-bottom: 4rem;
+    padding-top: 0;
+    padding-bottom: 0; /* Removed bottom gap entirely to sit flush with Our Services */
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow: hidden;
-    background: #000; /* Dark base for consistent contrast */
-    min-height: auto;
+    background: #000; /* Dark base fallback */
+    width: 100vw;
+    aspect-ratio: 16 / 9; /* Make the slide EXACTLY the same ratio as the 1080p video */
 }
 
 #about .section-title {
@@ -313,9 +314,9 @@ nav {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100vw; /* Exact screen width */
-    height: 56.25vw; /* Math-perfect 16:9 aspect ratio (9 / 16 * 100) */
-    object-fit: contain; /* Prevents any forced stretching/cropping */
+    width: 100%; /* Fits the exactly 16:9 container perfectly without scaling */
+    height: 100%; /* Fits the exactly 16:9 container perfectly without scaling */
+    object-fit: cover; /* Enforces 1:1 pixel rendering inside 16:9 container resolving blur! */
     z-index: 0;
     opacity: 1;
     /* Strict rendering fixes for desktop video clarity */
@@ -330,20 +331,22 @@ nav {
     position: relative;
     z-index: 2;
     color: white;
-    margin-top: 4rem; /* Added margin for safe space from navbar */
-    margin-bottom: 4rem;
+    margin-top: 4vw; /* Scalable margin */
+    margin-bottom: 0; /* Let flex handle space */
 }
 
 .about-container {
-    max-width: 100%; /* Changed from 1300px to allow absolute edges */
+    max-width: 100%;
     width: 100%;
+    height: 100%;
     display: flex;
-    flex-direction: column; /* Stack scroll track and text block */
-    gap: 4rem;
+    flex-direction: column;
+    justify-content: space-around; /* Naturally distribute scrolling track and boxes */
     align-items: center;
     position: relative;
     z-index: 2;
     padding: 0 2rem;
+    padding-bottom: 2vw; /* Slight lift from bottom slider section */
 }
 
 .about-text {
@@ -365,9 +368,8 @@ nav {
 .about-scroll-container {
     width: 100%;
     overflow: hidden;
-    margin-bottom: 3rem;
     position: relative;
-    padding: 1rem 0;
+    margin: 0;
 }
 
 .about-scroll-track {
@@ -424,7 +426,7 @@ nav {
     justify-content: space-between; /* Far left and far right */
     align-items: center;
     gap: 2rem;
-    margin-top: 8rem; /* Perfectly positioned to not cover the background video logo */
+    margin-top: 8vw; /* Pushed further down to entirely clear the massive shield logo */
     width: 100%;
     padding: 0 5vw; /* Absolute edges with slight safety margin */
 }
