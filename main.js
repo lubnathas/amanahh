@@ -189,13 +189,16 @@ document.addEventListener('DOMContentLoaded', () => {
     let scrollPauseTimeout;
     let reverseInterval;
 
+    const isMobileDeviceCheck = () => window.innerWidth <= 768 || ('ontouchstart' in window);
+
     const playHeroVideoForward = () => {
         if (reverseInterval) {
             clearInterval(reverseInterval); // Stop reverse if playing
             reverseInterval = null;
         }
         if (heroVideo) {
-            heroVideo.playbackRate = 2.5; // Significantly faster forward playback
+            // Use 5.0 speed for ultra-snappy mobile unlocking, 2.5 for desktop
+            heroVideo.playbackRate = isMobileDeviceCheck() ? 5.0 : 2.5; 
             if (heroVideo.paused) {
                 heroVideo.play().then(() => {
                     if (scrollIndicator) scrollIndicator.classList.add('hidden');
@@ -224,9 +227,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Only start the interval if it's not already running
         if (!reverseInterval) {
             reverseInterval = setInterval(() => {
-                // quadruple the scrubbing speed for snappy response
-                if (heroVideo && heroVideo.currentTime > 0.2) {
-                    heroVideo.currentTime -= 0.2; 
+                // significantly faster scrubbing speed for mobile for snappy response
+                const scrubSpeed = isMobileDeviceCheck() ? 0.4 : 0.2;
+                if (heroVideo && heroVideo.currentTime > scrubSpeed) {
+                    heroVideo.currentTime -= scrubSpeed; 
                 } else if (heroVideo) {
                     heroVideo.currentTime = 0;
                     clearInterval(reverseInterval);

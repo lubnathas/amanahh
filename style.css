@@ -314,8 +314,9 @@ nav {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    object-fit: cover; /* Fill section edges, removing black bars */
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover; /* Absolutely 1:1 clarity since the container perfectly matches 16:9 */
     z-index: 0;
     opacity: 1;
 }
