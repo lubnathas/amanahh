@@ -213,6 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Scroll-triggered Video Playback & Transition Sync
     const heroVideo = document.querySelector('.hero-video');
+    const aboutVideo = document.querySelector('.about-bg-video'); /* Retrieve the heavy why-choose-us video for explicit mobile controls */
     const scrollIndicator = document.querySelector('.scroll-indicator');
     let isHeroLocked = true;
     let videoThresholdPassed = false;
@@ -288,8 +289,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (heroVideo) {
                     heroVideo.playbackRate = 1.5; // Play a little fast on mobile devices
                     if (heroVideo.paused) {
-                        heroVideo.play().catch(e => console.log("Mobile tap-to-play prevented:", e));
+                        heroVideo.play().catch(e => console.log("Hero Mobile tap-to-play prevented:", e));
                     }
+                }
+                if (aboutVideo && aboutVideo.paused) {
+                    // Force the heavy Why Choose Us video to bypass iOS arbitrary autoplay rejection
+                    aboutVideo.play().catch(e => console.log("About Mobile tap-to-play prevented:", e));
                 }
                 document.removeEventListener('touchstart', playOnTouch);
                 document.removeEventListener('click', playOnTouch);
@@ -304,6 +309,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (heroVideo.paused) {
                         heroVideo.play().catch(e => console.log(e));
                     }
+                }
+                if (aboutVideo && aboutVideo.paused) {
+                    aboutVideo.play().catch(e => console.log(e));
                 }
             }, 100);
 

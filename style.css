@@ -558,10 +558,12 @@ nav {
         position: relative !important;
         display: block !important;
         order: 2 !important;
+        align-self: stretch !important; /* Force flex child to expand to full width if layout crashes */
         width: 100% !important;
         height: auto !important;
         aspect-ratio: 16 / 9;
         object-fit: cover;
+        background-color: #0b1120; /* Solid dark fallback while evaluating heavy 18MB MP4 payload */
         border-radius: 15px; /* Add a subtle rounding for a premium card-style look */
         margin-bottom: 2rem !important;
         z-index: 10 !important; /* Force it to render on top of any background artifacts */
