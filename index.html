@@ -38,9 +38,9 @@
                 <source src="hero.mp4" type="video/mp4">
             </video>
             <div class="hero-content">
-                <h1><span class="text-accent">Engineering</span> Reliability.<br>Delivering <span class="text-accent">Quality.</span></h1>
-                <p>Amanah MEP is Qatar’s leading multi-disciplinary engineering partner, providing innovative and
-                    sustainable MEP solutions for excellence.</p>
+                <h1><span class="text-accent">We</span> don't just build <span class="text-accent">systems.</span><br><span class="text-accent">We</span> build <span class="text-accent">trust.</span></h1>
+                <p>Amanah MEP - Your partner in engineering excellence,<br>
+                    Providing innovative, efficient, and sustainable solutions.</p>
             </div>
             <div class="scroll-indicator">scroll here</div>
         </section>
@@ -48,7 +48,7 @@
         <!-- About Us Slide -->
         <section id="about">
             <video autoplay loop muted playsinline class="about-bg-video">
-                <source src="Why choose us.mp4?v=2" type="video/mp4">
+                <source src="why choose us.mp4?v=4" type="video/mp4">
             </video>
             
             <h2 class="section-title">Why Choose Us</h2>
@@ -77,43 +77,50 @@
                     </div>
                 </div>
 
-                <div class="about-scroll-container">
-                    <div class="about-scroll-track">
-                        <!-- Original Cards -->
-                        <div class="about-item">
-                            <h3>Expert Engineering</h3>
-                            <p>Decades of technical expertise in mechanical and electrical systems.</p>
+                <div class="why-choose-more-section">
+                    <button id="knowMoreBtn">Click to know more</button>
+                    <div class="card-stack-container" id="whyChooseStack" style="display: none; opacity: 0; transition: opacity 0.5s; height: 350px; margin-top: 0; margin-bottom: 2rem;">
+                        <!-- Card 1 -->
+                        <div class="stack-card">
+                            <div class="card-inner">
+                                <div class="card-front" style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 3rem; border-top: 5px solid var(--primary-color);">
+                                    <h3 style="font-size: 1.8rem; color: var(--primary-color); margin-bottom: 1.5rem;">Expert Engineering</h3>
+                                    <p style="color: #444; line-height: 1.6; font-size: 1.1rem; text-align: center;">Decades of technical expertise in mechanical and electrical systems.</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="about-item">
-                            <h3>Quality Workmanship</h3>
-                            <p>Precision-driven execution adhering to the highest global standards.</p>
+                        <!-- Card 2 -->
+                        <div class="stack-card">
+                            <div class="card-inner">
+                                <div class="card-front" style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 3rem; border-top: 5px solid var(--primary-color);">
+                                    <h3 style="font-size: 1.8rem; color: var(--primary-color); margin-bottom: 1.5rem;">Quality Workmanship</h3>
+                                    <p style="color: #444; line-height: 1.6; font-size: 1.1rem; text-align: center;">Precision-driven execution adhering to the highest global standards.</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="about-item">
-                            <h3>Timely Delivery</h3>
-                            <p>We respect your timelines, ensuring efficient project completion.</p>
+                        <!-- Card 3 -->
+                        <div class="stack-card">
+                            <div class="card-inner">
+                                <div class="card-front" style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 3rem; border-top: 5px solid var(--primary-color);">
+                                    <h3 style="font-size: 1.8rem; color: var(--primary-color); margin-bottom: 1.5rem;">Timely Delivery</h3>
+                                    <p style="color: #444; line-height: 1.6; font-size: 1.1rem; text-align: center;">We respect your timelines, ensuring efficient project completion.</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="about-item">
-                            <h3>Customer Focus</h3>
-                            <p>Dedicated support and long-term asset protection for our clients.</p>
-                        </div>
-                        <!-- Duplicated Cards for Seamless Loop -->
-                        <div class="about-item">
-                            <h3>Expert Engineering</h3>
-                            <p>Decades of technical expertise in mechanical and electrical systems.</p>
-                        </div>
-                        <div class="about-item">
-                            <h3>Quality Workmanship</h3>
-                            <p>Precision-driven execution adhering to the highest global standards.</p>
-                        </div>
-                        <div class="about-item">
-                            <h3>Timely Delivery</h3>
-                            <p>We respect your timelines, ensuring efficient project completion.</p>
-                        </div>
-                        <div class="about-item">
-                            <h3>Customer Focus</h3>
-                            <p>Dedicated support and long-term asset protection for our clients.</p>
+                        <!-- Card 4 -->
+                        <div class="stack-card">
+                            <div class="card-inner">
+                                <div class="card-front" style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 3rem; border-top: 5px solid var(--primary-color);">
+                                    <h3 style="font-size: 1.8rem; color: var(--primary-color); margin-bottom: 1.5rem;">Customer Focus</h3>
+                                    <p style="color: #444; line-height: 1.6; font-size: 1.1rem; text-align: center;">Dedicated support and long-term asset protection for our clients.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    
+                    <!-- Back to normal option -->
+                    <button class="back-to-normal-btn" id="hideBundleBtn" style="display: none; background: transparent; color: var(--primary-color); border: 2px solid var(--primary-color); padding: 0.8rem 2rem; border-radius: 50px; font-weight: bold; cursor: pointer; transition: all 0.3s; margin-top: -1rem; margin-bottom: 2rem; z-index: 10;">Hide Details</button>
+                    
                 </div>
             </div>
         </section>

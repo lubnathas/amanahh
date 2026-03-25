@@ -25,6 +25,29 @@ body {
     overflow-x: hidden;
 }
 
+/* Global Glowing Cursor Sparkle Trail Effect */
+.sparkle-particle {
+    position: fixed;
+    pointer-events: none; /* Ignore all mouse clicks so it doesn't block UI */
+    z-index: 10000;
+    background: var(--primary-color);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--primary-color), 0 0 6px white;
+    /* Uses CSS variables injected dynamically by JavaScript for random trajectories */
+    animation: sparkleAnim 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes sparkleAnim {
+    0% {
+        transform: scale(1) translate(0, 0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0) translate(var(--tx, 0px), var(--ty, 0px));
+        opacity: 0;
+    }
+}
+
 /* Scroll Snapping Container */
 .main-container {
     width: 100%;
@@ -278,13 +301,13 @@ nav {
 /* About Slide - Why Choose Us */
 #about {
     padding-top: 0; /* Removed top gap */
-    padding-bottom: 4rem;
+    padding-bottom: 1rem; /* Reduced to tightly knit sections together */
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow: hidden;
-    background: #000; /* Dark base for consistent contrast */
+    background: var(--bg-light); /* Perfectly matches the start of the Our Services section for a seamless visual alignment */
     min-height: auto;
 }
 
@@ -297,16 +320,7 @@ nav {
 }
 
 #about::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: linear-gradient(rgba(26, 54, 93, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(26, 54, 93, 0.03) 1px, transparent 1px);
-    background-size: 50px 50px;
-    pointer-events: none;
-    z-index: -1;
+    display: none; /* Removed the faint grid that was drawing a visual white box around the section */
 }
 
 .about-bg-video {
@@ -357,61 +371,111 @@ nav {
 
 /* Accent line already handled globally */
 
-.about-scroll-container {
-    width: 100%;
-    overflow: hidden;
-    margin-bottom: 3rem;
-    position: relative;
-    padding: 1rem 0;
-}
-
-.about-scroll-track {
-    display: flex;
-    gap: 2rem;
-    width: max-content;
-    animation: scrollCards 30s linear infinite;
-}
-
-/* Pause animation on hover for readability */
-.about-scroll-track:hover {
-    animation-play-state: paused;
-}
-
-@keyframes scrollCards {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-
-.about-item {
-    flex: 0 0 350px; /* Fixed width for consistent scrolling */
-    background: rgba(255, 255, 255, 0.95);
-    padding: 2rem;
-    border-radius: 20px;
-    border-left: 5px solid var(--primary-color);
-    transition: all 0.3s ease;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+.why-choose-more-section {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    align-items: center;
+    width: 100%;
+    margin-top: 2rem;
 }
 
-.about-item:hover {
-    transform: translateY(-10px);
+#knowMoreBtn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 1rem 3rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 163, 255, 0.3);
+    margin-bottom: 2rem;
+}
+
+#knowMoreBtn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 163, 255, 0.4);
+}
+
+.why-choose-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    width: 100%;
+    max-width: 1300px;
+    padding: 1rem;
+    transition: opacity 0.6s ease;
+}
+
+.wc-flip-card {
+    background: transparent;
+    perspective: 1000px;
+    height: 250px;
+    width: 100%;
+}
+
+.wc-flip-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
+}
+
+.wc-flip-card:hover .wc-flip-inner {
+    transform: rotateY(180deg);
+}
+
+.wc-flip-front, .wc-flip-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.wc-flip-front {
     background: white;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    color: var(--primary-color);
+    border-top: 5px solid var(--primary-color);
 }
 
-.about-item h3 {
-    font-size: 1.25rem;
-    color: var(--primary-color);
+.wc-flip-front h3 {
+    font-size: 1.4rem;
     margin: 0;
 }
 
-.about-item p {
-    font-size: 0.95rem;
-    color: #444;
+.wc-flip-back {
+    background: var(--primary-color);
+    color: white;
+    transform: rotateY(180deg);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.wc-flip-back p {
+    font-size: 1rem;
     line-height: 1.6;
     margin: 0;
+}
+
+@media (max-width: 1200px) {
+    .why-choose-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .why-choose-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .mission-vision-boxes {
@@ -552,10 +616,9 @@ nav {
     }
 }
 
-/* Services Slide */
 #services {
     background-color: var(--bg-light);
-    padding-top: 6rem;
+    padding-top: 2rem; /* Reduced from 6rem to pull the title directly up to the cards */
     background-image: linear-gradient(to bottom, var(--bg-light), var(--bg-white));
 }
 
