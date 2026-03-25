@@ -285,8 +285,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Play video normally without locking
             const playOnTouch = () => {
-                if (heroVideo && heroVideo.paused) {
-                    heroVideo.play().catch(e => console.log("Mobile tap-to-play prevented:", e));
+                if (heroVideo) {
+                    heroVideo.playbackRate = 1.5; // Play a little fast on mobile devices
+                    if (heroVideo.paused) {
+                        heroVideo.play().catch(e => console.log("Mobile tap-to-play prevented:", e));
+                    }
                 }
                 document.removeEventListener('touchstart', playOnTouch);
                 document.removeEventListener('click', playOnTouch);
@@ -296,8 +299,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Attempt to autoplay immediately just in case
             setTimeout(() => {
-                if (heroVideo.paused) {
-                    heroVideo.play().catch(e => console.log(e));
+                if (heroVideo) {
+                    heroVideo.playbackRate = 1.5; // Speed up ambient playback
+                    if (heroVideo.paused) {
+                        heroVideo.play().catch(e => console.log(e));
+                    }
                 }
             }, 100);
 

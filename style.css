@@ -548,11 +548,32 @@ nav {
         border-radius: 30px;
     }
 
+    #about .section-title {
+        order: 1 !important;
+        margin-bottom: 2rem;
+        color: var(--text-color) !important; /* Force dark text since background is no longer the dark video on mobile */
+    }
+
+    .about-bg-video {
+        position: relative !important;
+        display: block !important;
+        order: 2 !important;
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        border-radius: 15px; /* Add a subtle rounding for a premium card-style look */
+        margin-bottom: 2rem !important;
+        z-index: 10 !important; /* Force it to render on top of any background artifacts */
+        flex-shrink: 0 !important; /* Protect from being squashed by flex column */
+    }
+
     .about-container {
         flex-direction: column;
         justify-content: center;
         text-align: center;
         padding: 0 1.5rem;
+        order: 3 !important;
     }
 
     .about-text {
@@ -563,25 +584,6 @@ nav {
 }
 
 @media (max-width: 768px) {
-    #about .section-title {
-        order: 1;
-        margin-bottom: 2rem;
-    }
-
-    .about-bg-video {
-        position: relative;
-        order: 2;
-        width: 100%;
-        height: auto;
-        aspect-ratio: 16 / 9;
-        object-fit: cover;
-        border-radius: 15px; /* Add a subtle rounding for a premium card-style look */
-        margin-bottom: 2rem;
-    }
-
-    .about-container {
-        order: 3;
-    }
 
     .mission-vision-boxes {
         flex-direction: column;
