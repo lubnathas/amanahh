@@ -284,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
             isHeroLocked = false;
             if (scrollIndicator) scrollIndicator.classList.add('hidden');
 
-            // Play video normally without locking
+            // Listen for user tap to bypass generic blocks
             const playOnTouch = () => {
                 if (heroVideo) {
                     heroVideo.playbackRate = 1.5; // Play a little fast on mobile devices
@@ -301,6 +301,22 @@ document.addEventListener('DOMContentLoaded', () => {
             };
             document.addEventListener('touchstart', playOnTouch, { passive: true });
             document.addEventListener('click', playOnTouch);
+            
+            // Critical Mobile iOS intersection observer: Constantly enforce playback when video enters viewport limits
+            if ('IntersectionObserver' in window && aboutVideo) {
+                const videoObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            if (aboutVideo.paused) {
+                                aboutVideo.play().catch(e => console.log("Explicit mobile observer play failed:", e));
+                            }
+                        } else {
+                            aboutVideo.pause(); // Conserve battery by strictly pausing the 18MB video when scrolled away
+                        }
+                    });
+                }, { threshold: 0.1 });
+                videoObserver.observe(aboutVideo);
+            }
 
             // Attempt to autoplay immediately just in case
             setTimeout(() => {
