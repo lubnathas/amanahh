@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
             reverseInterval = null;
         }
         if (heroVideo) {
-            // Use 5.0 speed for ultra-snappy mobile unlocking, 2.5 for desktop
+            // Uninterrupted playback for perfectly smooth experience (no pausing bounds)
             heroVideo.playbackRate = isMobileDeviceCheck() ? 5.0 : 2.5; 
             if (heroVideo.paused) {
                 heroVideo.play().then(() => {
@@ -236,20 +236,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }).catch(err => console.log("Video play error:", err));
             }
         }
-        
-        // Strictly stop when scrolling stops (150ms gap for smoother feel)
-        clearTimeout(scrollPauseTimeout);
-        scrollPauseTimeout = setTimeout(() => {
-            if (heroVideo) {
-                heroVideo.pause();
-                heroVideo.playbackRate = 1.0; // Reset for any organic playback
-            }
-        }, 150);
     };
 
     const playHeroVideoReverse = () => {
         if (heroVideo) {
-            heroVideo.pause(); // Ensure native playback is stopped
+            heroVideo.pause(); // Ensure native playback is stopped strictly for reverse scrubbing
             heroVideo.playbackRate = 1.0;
         }
         
@@ -270,13 +261,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }, 16); // 60fps for maximum smoothness
         }
-
-        // Stop reverse scrubbing when scrolling stops
-        clearTimeout(scrollPauseTimeout);
-        scrollPauseTimeout = setTimeout(() => {
-            clearInterval(reverseInterval);
-            reverseInterval = null;
-        }, 150);
     };
 
     if (heroVideo) {
@@ -340,13 +324,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (isHeroLocked && deltaY > 0 && isAtTop) {
                     if(e && e.cancelable) e.preventDefault();
                     playHeroVideoForward();
-
-                    // Unlock condition
-                    if (heroVideo.currentTime > (heroVideo.duration * 0.9)) {
-                        videoThresholdPassed = true;
-                        isHeroLocked = false;
-                        document.querySelector('#about').scrollIntoView({ behavior: 'smooth' });
-                    }
                 } 
                 // If at the top and scrolling UP (or swiping down)
                 else if (isAtTop && deltaY < 0) {
@@ -377,13 +354,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            // Event for video reaching end organically (fallback)
-            heroVideo.addEventListener('timeupdate', () => {
-                if (isHeroLocked && heroVideo.currentTime > (heroVideo.duration * 0.95)) {
-                    videoThresholdPassed = true;
-                    isHeroLocked = false;
-                }
-            });
+            // Smoothly and organically track progress to cleanly transition and unlock
+            if (heroVideo) {
+                heroVideo.addEventListener('timeupdate', () => {
+                    // Check if it's playing forward (not reversed into 0) and crossed the threshold
+                    if (isHeroLocked && heroVideo.playbackRate > 1.0 && heroVideo.currentTime > (heroVideo.duration * 0.9)) {
+                        videoThresholdPassed = true;
+                        isHeroLocked = false;
+                        
+                        // We safely stop it from bleeding past the end
+                        heroVideo.pause();
+                        heroVideo.playbackRate = 1.0; 
+                        
+                        document.querySelector('#about').scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            }
         }
     }
     // 'Click to know more' button logic
