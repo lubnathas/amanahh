@@ -211,167 +211,58 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // Scroll-triggered Video Playback & Transition Sync
+    // Ambient Video Playback Safeties
     const heroVideo = document.querySelector('.hero-video');
-    const aboutVideo = document.querySelector('.about-bg-video'); /* Retrieve the heavy why-choose-us video for explicit mobile controls */
-    const scrollIndicator = document.querySelector('.scroll-indicator');
-    let isHeroLocked = true;
-    let videoThresholdPassed = false;
-    let scrollPauseTimeout;
-    let reverseInterval;
-
-    const isMobileDeviceCheck = () => window.innerWidth <= 768 || ('ontouchstart' in window);
-
-    const playHeroVideoForward = () => {
-        if (reverseInterval) {
-            clearInterval(reverseInterval); // Stop reverse if playing
-            reverseInterval = null;
+    const aboutVideo = document.querySelector('.about-bg-video'); 
+    
+    // Listen for user tap to aggressively bypass Apple's generic Safari blocks
+    const playOnTouch = () => {
+        if (heroVideo && heroVideo.paused) {
+            heroVideo.play().catch(e => console.log("Hero touch play prevented:", e));
         }
-        if (heroVideo) {
-            // Uninterrupted playback for perfectly smooth experience (no pausing bounds)
-            heroVideo.playbackRate = isMobileDeviceCheck() ? 5.0 : 2.5; 
-            if (heroVideo.paused) {
-                heroVideo.play().then(() => {
-                    if (scrollIndicator) scrollIndicator.classList.add('hidden');
-                }).catch(err => console.log("Video play error:", err));
-            }
+        if (aboutVideo && aboutVideo.paused) {
+            aboutVideo.play().catch(e => console.log("About touch play prevented:", e));
         }
+        document.removeEventListener('touchstart', playOnTouch);
+        document.removeEventListener('click', playOnTouch);
     };
-
-    const playHeroVideoReverse = () => {
-        if (heroVideo) {
-            heroVideo.pause(); // Ensure native playback is stopped strictly for reverse scrubbing
-            heroVideo.playbackRate = 1.0;
-        }
-        
-        if (scrollIndicator) scrollIndicator.classList.add('hidden');
-
-        // Only start the interval if it's not already running
-        if (!reverseInterval) {
-            reverseInterval = setInterval(() => {
-                // significantly faster scrubbing speed for mobile for snappy response
-                const scrubSpeed = isMobileDeviceCheck() ? 0.4 : 0.2;
-                if (heroVideo && heroVideo.currentTime > scrubSpeed) {
-                    heroVideo.currentTime -= scrubSpeed; 
-                } else if (heroVideo) {
-                    heroVideo.currentTime = 0;
-                    clearInterval(reverseInterval);
-                    reverseInterval = null;
-                    if (scrollIndicator) scrollIndicator.classList.remove('hidden'); // Show indicator at start
-                }
-            }, 16); // 60fps for maximum smoothness
-        }
-    };
-
-    if (heroVideo) {
-        if (isMobileDeviceCheck()) {
-            isHeroLocked = false;
-            if (scrollIndicator) scrollIndicator.classList.add('hidden');
-
-            // Listen for user tap to bypass generic blocks
-            const playOnTouch = () => {
-                if (heroVideo) {
-                    heroVideo.playbackRate = 1.5; // Play a little fast on mobile devices
-                    if (heroVideo.paused) {
-                        heroVideo.play().catch(e => console.log("Hero Mobile tap-to-play prevented:", e));
-                    }
-                }
-                if (aboutVideo && aboutVideo.paused) {
-                    // Force the heavy Why Choose Us video to bypass iOS arbitrary autoplay rejection
-                    aboutVideo.play().catch(e => console.log("About Mobile tap-to-play prevented:", e));
-                }
-                document.removeEventListener('touchstart', playOnTouch);
-                document.removeEventListener('click', playOnTouch);
-            };
-            document.addEventListener('touchstart', playOnTouch, { passive: true });
-            document.addEventListener('click', playOnTouch);
-            
-            // Critical Mobile iOS intersection observer: Constantly enforce playback when video enters viewport limits
-            if ('IntersectionObserver' in window && aboutVideo) {
-                const videoObserver = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            if (aboutVideo.paused) {
-                                aboutVideo.play().catch(e => console.log("Explicit mobile observer play failed:", e));
-                            }
-                        } else {
-                            aboutVideo.pause(); // Conserve battery by strictly pausing the 18MB video when scrolled away
-                        }
-                    });
-                }, { threshold: 0.1 });
-                videoObserver.observe(aboutVideo);
-            }
-
-            // Attempt to autoplay immediately just in case
-            setTimeout(() => {
-                if (heroVideo) {
-                    heroVideo.playbackRate = 1.5; // Speed up ambient playback
-                    if (heroVideo.paused) {
-                        heroVideo.play().catch(e => console.log(e));
-                    }
-                }
-                if (aboutVideo && aboutVideo.paused) {
-                    aboutVideo.play().catch(e => console.log(e));
-                }
-            }, 100);
-
-        } else {
-            const handleScrollInteraction = (deltaY, e) => {
-                const scrollY = window.scrollY;
-                const isAtTop = scrollY <= 10;
-                
-                // If at the top and scrolling down (or swiping up)
-                if (isHeroLocked && deltaY > 0 && isAtTop) {
-                    if(e && e.cancelable) e.preventDefault();
-                    playHeroVideoForward();
-                } 
-                // If at the top and scrolling UP (or swiping down)
-                else if (isAtTop && deltaY < 0) {
-                    isHeroLocked = true;
-                    videoThresholdPassed = false;
-                    
-                    if (heroVideo.currentTime > 0) {
-                        if(e && e.cancelable) e.preventDefault(); // Stop normal scrolling back up
-                        playHeroVideoReverse();
-                    }
-                }
-            };
-
-            window.addEventListener('wheel', (e) => {
-                handleScrollInteraction(e.deltaY, e);
-            }, { passive: false });
-
-            // Backup for scroll/drag events bypassing listeners
-            window.addEventListener('scroll', () => {
-                if (isHeroLocked) {
-                    if (window.scrollY > 10) {
-                        playHeroVideoForward();
-                        
-                        if (!videoThresholdPassed && heroVideo.currentTime < heroVideo.duration * 0.9) {
-                            window.scrollTo(0, 0); // Snap back
-                        }
-                    }
-                }
-            });
-
-            // Smoothly and organically track progress to cleanly transition and unlock
-            if (heroVideo) {
-                heroVideo.addEventListener('timeupdate', () => {
-                    // Check if it's playing forward (not reversed into 0) and crossed the threshold
-                    if (isHeroLocked && heroVideo.playbackRate > 1.0 && heroVideo.currentTime > (heroVideo.duration * 0.9)) {
-                        videoThresholdPassed = true;
-                        isHeroLocked = false;
-                        
-                        // We safely stop it from bleeding past the end
-                        heroVideo.pause();
-                        heroVideo.playbackRate = 1.0; 
-                        
-                        document.querySelector('#about').scrollIntoView({ behavior: 'smooth' });
+    document.addEventListener('touchstart', playOnTouch, { passive: true });
+    document.addEventListener('click', playOnTouch);
+    
+    // Intersection observer: Constantly enforce playback when videos enter viewport limits for reliability
+    if ('IntersectionObserver' in window) {
+        if (aboutVideo) {
+            const videoObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (aboutVideo.paused) aboutVideo.play().catch(e => console.log("Observer play failed:", e));
+                    } else {
+                        aboutVideo.pause(); // Conserve memory strictly pausing the 18MB video when scrolled blindly away
                     }
                 });
-            }
+            }, { threshold: 0.1 });
+            videoObserver.observe(aboutVideo);
+        }
+        
+        if (heroVideo) {
+            const heroObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (heroVideo.paused) heroVideo.play().catch(e => console.log("Hero observer play failed:", e));
+                    } else {
+                        heroVideo.pause(); // Conserve memory
+                    }
+                });
+            }, { threshold: 0 });
+            heroObserver.observe(heroVideo);
         }
     }
+
+    // Attempt to forcefully autoplay immediately on payload load
+    setTimeout(() => {
+        if (heroVideo && heroVideo.paused) heroVideo.play().catch(e => console.log(e));
+        if (aboutVideo && aboutVideo.paused) aboutVideo.play().catch(e => console.log(e));
+    }, 100);
     // 'Click to know more' button logic
     const knowMoreBtn = document.getElementById('knowMoreBtn');
     const whyChooseStack = document.getElementById('whyChooseStack');
