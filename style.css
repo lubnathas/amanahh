@@ -320,53 +320,23 @@ nav {
 }
 
 #about .section-title {
-    color: var(--text-color) !important;
     position: relative;
     z-index: 2;
+    color: white;
     margin-top: 4rem; /* Added margin for safe space from navbar */
-    margin-bottom: 2rem;
+    margin-bottom: 4rem;
 }
 
-.about-content-wrapper {
-    display: flex;
-    width: 100%;
-    max-width: 1400px;
-    gap: 4rem;
-    align-items: center;
-    padding: 2rem;
-}
-
-.about-left-side {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.about-right-side {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.side-video-container {
-    width: 100%;
-    border-radius: 30px;
-    overflow: hidden;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
-    transform: perspective(1000px) rotateY(-5deg);
-    transition: transform 0.5s ease;
-}
-
-.side-video-container:hover {
-    transform: perspective(1000px) rotateY(0deg) scale(1.02);
-}
-
-.about-side-video {
+.about-bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: auto;
-    display: block;
-    object-fit: cover;
+    aspect-ratio: 16 / 9;
+    object-fit: cover; /* Absolutely 1:1 clarity since the container perfectly matches 16:9 */
+    z-index: 0;
+    opacity: 1;
 }
 
 .about-container {
@@ -506,65 +476,41 @@ nav {
 
 .mission-vision-boxes {
     display: flex;
-    flex-direction: column;
-    gap: 3rem;
+    justify-content: space-between; /* Far left and far right */
+    align-items: center;
+    gap: 2rem;
+    margin-top: 8rem; /* Perfectly positioned to not cover the background video logo */
     width: 100%;
-    padding: 0;
+    padding: 0 5vw; /* Absolute edges with slight safety margin */
 }
 
+/* Ensure Mission on left and Vision on right based on user request */
+.mission-vision-boxes .mv-box:nth-child(1) { order: 2; } /* Vision (right) */
+.mission-vision-boxes .mv-box:nth-child(2) { order: 1; } /* Mission (left) */
+
 .mv-box {
-    background: white;
+    background: rgba(255, 255, 255, 0.98);
     padding: 2.5rem;
     border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    border: none;
-    border-left: 8px solid var(--primary-color);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-top: 6px solid var(--primary-color);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
     gap: 1.5rem;
-    width: 100%;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-}
-
-.mv-box::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(0, 163, 255, 0.05) 0%, transparent 100%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.mv-box:hover::before {
-    opacity: 1;
-}
-
-.mv-box:hover {
-    transform: scale(1.05) translateX(15px);
-    box-shadow: 0 20px 40px rgba(0, 163, 255, 0.2);
-    background: #f8fbff;
-}
-
-.popping-box {
-    animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards;
-}
-
-@keyframes popIn {
-    0% { transform: scale(0.8) translateY(50px); opacity: 0; }
-    100% { transform: scale(1) translateY(0); opacity: 1; }
+    width: 300px; /* Reduced from 350px */
+    height: 300px;
+    aspect-ratio: 1 / 1;
+    animation: floatingCards 5s ease-in-out infinite alternate;
 }
 
 @keyframes floatingCards {
     0% { transform: translateY(0); }
-    100% { transform: translateY(10px); }
+    100% { transform: translateY(15px); } /* Downward floating */
 }
 
 /* Synchronized floating without delay */
@@ -590,23 +536,6 @@ nav {
 
 /* Responsive Redesign */
 @media (max-width: 992px) {
-    .about-content-wrapper {
-        flex-direction: column;
-        gap: 3rem;
-    }
-
-    .about-left-side, .about-right-side {
-        width: 100%;
-    }
-
-    .about-right-side {
-        order: -1; /* Video on top for tablet/mobile */
-    }
-
-    .side-video-container {
-        transform: none;
-    }
-
     .about-stats {
         width: 95%;
         margin-top: -4rem;
@@ -618,7 +547,23 @@ nav {
     #about .section-title {
         order: 1 !important;
         margin-bottom: 2rem;
-        color: var(--text-color) !important; 
+        color: var(--text-color) !important; /* Force dark text since background is no longer the dark video on mobile */
+    }
+
+    .about-bg-video {
+        position: relative !important;
+        display: block !important;
+        order: 2 !important;
+        align-self: stretch !important; /* Force flex child to expand to full width if layout crashes */
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        background-color: #0b1120; /* Solid dark fallback while evaluating heavy 18MB MP4 payload */
+        border-radius: 15px; /* Add a subtle rounding for a premium card-style look */
+        margin-bottom: 2rem !important;
+        z-index: 10 !important; /* Force it to render on top of any background artifacts */
+        flex-shrink: 0 !important; /* Protect from being squashed by flex column */
     }
 
     .about-container {
@@ -627,6 +572,12 @@ nav {
         text-align: center;
         padding: 0 1.5rem;
         order: 3 !important;
+    }
+
+    .about-text {
+        flex: 1 1 100%;
+        max-width: 100%;
+        background: rgba(255, 255, 255, 0.1);
     }
 }
 
