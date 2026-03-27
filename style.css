@@ -1037,7 +1037,7 @@ nav {
     transform: translateX(-50%);
     width: 100px;
     height: 5px;
-    background: #4da6ff;
+    background: var(--primary-color);
     border-radius: 2.5px;
 }
 
