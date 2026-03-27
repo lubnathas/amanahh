@@ -1024,19 +1024,21 @@ nav {
     font-size: 2.5rem;
     color: var(--text-color);
     font-weight: 700;
-    margin-bottom: 1.5rem;
+    margin-bottom: 3.5rem;
     position: relative;
+    text-align: center;
 }
 
 .contact-side-title::after {
     content: '';
     position: absolute;
     bottom: -15px;
-    left: 0;
-    width: 60px;
-    height: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 5px;
     background: #4da6ff;
-    border-radius: 2px;
+    border-radius: 2.5px;
 }
 
 .contact-cards {
