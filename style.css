@@ -300,66 +300,71 @@ nav {
 
 /* About Slide - Why Choose Us */
 #about {
-    padding-top: 4rem;
-    padding-bottom: 2rem;
+    padding-top: 0; /* Removed top gap */
+    padding-bottom: 1rem; /* Reduced to tightly knit sections together */
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow: hidden;
-    background: var(--bg-light);
+    background: var(--bg-light); /* Perfectly matches the start of the Our Services section for a seamless visual alignment */
     min-height: auto;
+}
+
+#about .section-title {
+    color: var(--text-color);
+}
+
+#about .section-subtitle {
+    color: #666;
+}
+
+#about::after {
+    display: none; /* Removed the faint grid that was drawing a visual white box around the section */
+}
+
+.about-bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover; /* Absolutely 1:1 clarity since the container perfectly matches 16:9 */
+    z-index: 0;
+    opacity: 1;
 }
 
 #about .section-title {
     position: relative;
     z-index: 2;
-    color: var(--text-color);
+    color: white;
+    margin-top: 4rem; /* Added margin for safe space from navbar */
     margin-bottom: 4rem;
 }
 
 .about-container {
-    max-width: 1400px;
+    max-width: 100%; /* Changed from 1300px to allow absolute edges */
     width: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Stack scroll track and text block */
+    gap: 4rem;
     align-items: center;
     position: relative;
     z-index: 2;
     padding: 0 2rem;
 }
 
-.about-split-row {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    justify-content: space-between;
-    width: 100%;
-    gap: 4rem;
-    margin-bottom: 3rem;
-}
-
 .about-text {
-    flex: 1.2;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.about-video-side {
-    flex: 1;
-    display: flex;
-    align-items: center;
-}
-
-.about-side-video {
+    align-self: center;
     width: 100%;
-    height: auto;
-    border-radius: 25px;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
-    object-fit: cover;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    max-height: 500px;
+    max-width: 100%; /* Changed from 1400px to full width */
+    padding: 0;
+    background: transparent;
+    backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+    margin: 0;
 }
 
 /* Main about section styling */
@@ -475,58 +480,41 @@ nav {
 
 .mission-vision-boxes {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 2.5rem;
+    justify-content: space-between; /* Far left and far right */
+    align-items: center;
+    gap: 2rem;
+    margin-top: 8rem; /* Perfectly positioned to not cover the background video logo */
     width: 100%;
+    padding: 0 5vw; /* Absolute edges with slight safety margin */
 }
 
-.mv-box.button-styled {
-    background: white;
-    padding: 2rem;
+/* Ensure Mission on left and Vision on right based on user request */
+.mission-vision-boxes .mv-box:nth-child(1) { order: 2; } /* Vision (right) */
+.mission-vision-boxes .mv-box:nth-child(2) { order: 1; } /* Mission (left) */
+
+.mv-box {
+    background: rgba(255, 255, 255, 0.98);
+    padding: 2.5rem;
     border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(0, 163, 255, 0.1);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-top: 6px solid var(--primary-color);
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    width: 100%;
-    max-width: 500px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    gap: 1.5rem;
+    width: 300px; /* Reduced from 350px */
+    height: 300px;
+    aspect-ratio: 1 / 1;
+    animation: floatingCards 5s ease-in-out infinite alternate;
 }
 
-.mv-box.button-styled:hover {
-    transform: scale(1.05) translateX(10px);
-    box-shadow: 0 20px 40px rgba(0, 163, 255, 0.15);
-    border-color: var(--primary-color);
-    background: var(--bg-light);
-}
-
-.mv-box.button-styled:active {
-    transform: scale(0.98);
-}
-
-.mv-box.button-styled::after {
-    content: "→";
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.5rem;
-    color: var(--primary-color);
-    opacity: 0;
-    transition: all 0.3s ease;
-}
-
-.mv-box.button-styled:hover::after {
-    opacity: 1;
-    right: 30px;
+@keyframes floatingCards {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(15px); } /* Downward floating */
 }
 
 .mv-box {
@@ -588,42 +576,37 @@ nav {
     #about .section-title {
         order: 1 !important;
         margin-bottom: 2rem;
-        color: var(--text-color) !important;
+        color: var(--text-color) !important; /* Force dark text since background is no longer the dark video on mobile */
     }
 
-    .about-split-row {
+    .about-bg-video {
+        position: relative !important;
+        display: block !important;
+        order: 2 !important;
+        align-self: stretch !important; /* Force flex child to expand to full width if layout crashes */
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        background-color: #0b1120; /* Solid dark fallback while evaluating heavy 18MB MP4 payload */
+        border-radius: 15px; /* Add a subtle rounding for a premium card-style look */
+        margin-bottom: 2rem !important;
+        z-index: 10 !important; /* Force it to render on top of any background artifacts */
+        flex-shrink: 0 !important; /* Protect from being squashed by flex column */
+    }
+
+    .about-container {
         flex-direction: column;
-        gap: 3rem;
+        justify-content: center;
+        text-align: center;
+        padding: 0 1.5rem;
+        order: 3 !important;
     }
 
     .about-text {
-        order: 2;
-        width: 100%;
-        align-items: center;
-    }
-
-    .about-video-side {
-        order: 1;
-        width: 100%;
-    }
-
-    .about-side-video {
-        border-radius: 15px;
-        max-height: 400px;
-    }
-
-    .mission-vision-boxes {
-        align-items: center;
-    }
-
-    .mv-box.button-styled {
+        flex: 1 1 100%;
         max-width: 100%;
-        text-align: center;
-        align-items: center;
-    }
-    
-    .mv-box.button-styled:hover {
-        transform: scale(1.02); /* Less aggressive on mobile */
+        background: rgba(255, 255, 255, 0.1);
     }
 }
 
