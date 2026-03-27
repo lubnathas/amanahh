@@ -1020,25 +1020,28 @@ nav {
     gap: 3rem;
 }
 
-.contact-side-title {
+/* High Specificity for Heading Standardization */
+#contact .contact-details-side .contact-side-title {
     font-size: 2.5rem;
     color: var(--text-color);
     font-weight: 700;
     margin-bottom: 3.5rem;
     position: relative;
-    text-align: center;
+    text-align: center !important;
+    display: block !important;
+    width: 100% !important;
 }
 
-.contact-side-title::after {
-    content: '';
-    position: absolute;
-    bottom: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 5px;
-    background: var(--primary-color);
-    border-radius: 2.5px;
+#contact .contact-details-side .contact-side-title::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: -15px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 100px !important;
+    height: 5px !important;
+    background: var(--primary-color) !important;
+    border-radius: 2.5px !important;
 }
 
 .contact-cards {
