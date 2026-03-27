@@ -214,6 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Ambient Video Playback Safeties
     const heroVideo = document.querySelector('.hero-video');
     const aboutVideo = document.querySelector('.about-bg-video'); 
+    const servicesVideo = document.querySelector('.services-bg-video');
     
     // Listen for user tap to aggressively bypass Apple's generic Safari blocks
     const playOnTouch = () => {
@@ -222,6 +223,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (aboutVideo && aboutVideo.paused) {
             aboutVideo.play().catch(e => console.log("About touch play prevented:", e));
+        }
+        if (servicesVideo && servicesVideo.paused) {
+            servicesVideo.play().catch(e => console.log("Services touch play prevented:", e));
         }
         document.removeEventListener('touchstart', playOnTouch);
         document.removeEventListener('click', playOnTouch);
@@ -235,13 +239,26 @@ document.addEventListener('DOMContentLoaded', () => {
             const videoObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        if (aboutVideo.paused) aboutVideo.play().catch(e => console.log("Observer play failed:", e));
+                        if (aboutVideo.paused) aboutVideo.play().catch(e => console.log("About observer play failed:", e));
                     } else {
-                        aboutVideo.pause(); // Conserve memory strictly pausing the 18MB video when scrolled blindly away
+                        aboutVideo.pause(); // Conserve memory
                     }
                 });
             }, { threshold: 0.1 });
             videoObserver.observe(aboutVideo);
+        }
+        
+        if (servicesVideo) {
+            const servicesObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (servicesVideo.paused) servicesVideo.play().catch(e => console.log("Services observer play failed:", e));
+                    } else {
+                        servicesVideo.pause(); // Conserve memory
+                    }
+                });
+            }, { threshold: 0.1 });
+            servicesObserver.observe(servicesVideo);
         }
         
         if (heroVideo) {
@@ -262,6 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         if (heroVideo && heroVideo.paused) heroVideo.play().catch(e => console.log(e));
         if (aboutVideo && aboutVideo.paused) aboutVideo.play().catch(e => console.log(e));
+        if (servicesVideo && servicesVideo.paused) servicesVideo.play().catch(e => console.log(e));
     }, 100);
     // 'Click to know more' button logic
     const knowMoreBtn = document.getElementById('knowMoreBtn');
