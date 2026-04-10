@@ -223,15 +223,19 @@ nav {
 
 .video-blur-mask {
     position: absolute;
-    bottom: 2rem;
-    right: 2rem;
-    width: 100px;
-    height: 50px;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 140px;
+    height: 70px;
     z-index: 2;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
+    /* Gaussian blur for natural softening */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    /* Remove artificial tints to maintain natural lighting/colors */
+    background: transparent;
+    /* Feathered edges to blend smoothly into the surroundings */
+    mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0) 100%);
+    -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0) 100%);
     pointer-events: none;
 }
 
