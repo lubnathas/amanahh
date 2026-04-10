@@ -217,8 +217,26 @@ nav {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); /* Removed scale */
     z-index: 1;
+}
+
+.video-blur-mask {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    width: 100px;
+    height: 50px;
+    z-index: 2;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    pointer-events: none;
+}
+
+.contact-hero-video {
+    /* Zoom removed */
 }
 
 #home::before {

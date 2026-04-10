@@ -98,9 +98,10 @@
     <div class="main-container">
         <!-- Home Slide -->
         <section id="home">
-            <video autoplay loop muted playsinline="true" webkit-playsinline="true" class="hero-video">
-                <source src="hero (1).mp4" type="video/mp4">
+            <video autoplay loop muted playsinline class="hero-video">
+                <source src="hero.mp4" type="video/mp4">
             </video>
+            <div class="video-blur-mask"></div>
             <div class="hero-content">
                 <h1><span class="text-accent">We</span> don't just build <span class="text-accent">systems.</span><br><span class="text-accent">We</span> build <span class="text-accent">trust.</span></h1>
                 <p>Amanah MEP - Your partner in engineering excellence,<br>
@@ -393,7 +394,11 @@
         <section id="contact">
             <!-- New Contact Hero Banner -->
             <div class="contact-hero">
-                <div class="contact-hero-bg" style="background-image: url('doha_skyline_new.png');"></div>
+                <video autoplay loop muted playsinline class="contact-hero-video" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+                    <source src="hero.mp4" type="video/mp4">
+                </video>
+                <div class="video-blur-mask"></div>
+                <div class="contact-hero-bg" style="background-image: url('doha_skyline_new.png'); display: none;"></div>
                 <div class="contact-hero-overlay"></div>
                 <div class="contact-hero-content">
                     <h1>Our Contact</h1>
